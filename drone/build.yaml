@@ -7,7 +7,12 @@ steps:
   - name: build {{ .image_name }}
     image: dockcross/{{ .image_name }}
     commands:
-    {{ range .build_types }}
+    {{ if .build_types }}
+        {{ $build_types := .build_types }}
+    {{ else }}
+        {{ $build_types := list Debug Release }}
+    {{ end }}
+    {{ range $build_types }}
     - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
     - cmake --build build-{{$image_name}}-{{.}} --config={{.}} -- -j`nproc`
     {{end}}
