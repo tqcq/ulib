@@ -5,12 +5,28 @@ data:
     - Debug
     - Release
   builds:
-  - image_name: linux-x64
-  - image_name: linux-x86
-  - image_name: linux-mipsel-lts
-  - image_name: linux-mips-lts
-  - image_name: linux-armv7-lts
-  - image_name: linux-armv6-lts
-  - image_name: linux-armv5
-  - image_name: linux-armv5-musl
-  - image_name: linux-arm64-lts
+    - image_name: android-arm
+    - image_name: android-arm64
+    - image_name: linux-arm64
+    - image_name: linux-armv5
+    - image_name: linux-armv6
+    - image_name: linux-armv7
+    - image_name: linux-armv7a
+    - image_name: linux-mips
+    - image_name: linux-ppc64le
+    - image_name: linux-s390x
+    - image_name: linux-x64
+    - image_name: linux-x64-clang
+    - image_name: linux-x86
+    - image_name: manylinux-x64
+    - image_name: manylinux1-x64
+    - image_name: manylinux2010-x64
+    - image_name: manylinux2014-aarch64
+    - image_name: manylinux2014-x64
+    - image_name: manylinux2014-x86
+    - image_name: manylinux_2_28-x64
+    - image_name: web-wasm
+    - image_name: windows-static-x64
+    - image_name: windows-static-x86
+    - image_name: windows-x64
+
