@@ -5,7 +5,6 @@ data:
     - Debug
     - Release
   builds:
-    - image_name: android-arm
     - image_name: android-arm64
     - image_name: linux-arm64
     - image_name: linux-armv5
@@ -25,7 +24,6 @@ data:
     - image_name: manylinux2014-x64
     - image_name: manylinux2014-x86
     - image_name: manylinux_2_28-x64
-    - image_name: web-wasm
     - image_name: windows-static-x64
     - image_name: windows-static-x86
     - image_name: windows-x64
