@@ -1,6 +1,9 @@
 kind: template
 load: build.yaml
 data:
+  default_build_types:
+    - Debug
+    - Release
   builds:
   - image_name: linux-x64
   - image_name: linux-x86

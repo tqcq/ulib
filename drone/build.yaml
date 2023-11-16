@@ -2,6 +2,7 @@ kind: pipeline
 type: docker
 name: default
 steps:
+  {{ $default_build_types := .input.default_build_types }}
   {{ range .input.builds }}
   {{ $image_name := .image_name }}
   - name: build {{ .image_name }}
@@ -10,7 +11,7 @@ steps:
     {{ if .build_types }}
         {{ $build_types := .build_types }}
     {{ else }}
-        {{ $build_types := list Debug Release }}
+        {{ $build_types := $default_build_types }}
     {{ end }}
     {{ range $build_types }}
     - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
@@ -22,3 +23,7 @@ steps:
     image: alpine
     commands:
       - ls -l build-*
+    depends_on:
+    {{ range .input.builds }}
+    - build {{ .image_name }}
+    {{ end }}
