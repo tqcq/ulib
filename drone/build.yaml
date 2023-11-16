@@ -8,10 +8,9 @@ steps:
   - name: build {{ .image_name }}
     image: dockcross/{{ .image_name }}
     commands:
+    {{ $build_types := $default_build_types }}
     {{ if .build_types }}
         {{ $build_types := .build_types }}
-    {{ else }}
-        {{ $build_types := $default_build_types }}
     {{ end }}
     {{ range $build_types }}
     - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
