@@ -1,6 +1,5 @@
-kind: pipeline
+kind: template
 type: drone/build.yaml
-
 data:
   image_name: x64
   build:
