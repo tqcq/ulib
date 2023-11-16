@@ -1,30 +1,16 @@
-matrix:
-  BUILD_TYPE:
-    - Debug
-    - Release
-  OS:
-    - linux
-  ARCH:
-    - x64-clang
-    - x86
-    - riscv64
-    - riscv32
-    - mips-lts
-    - mipsel-lts
-    - armv7-lts
-    - armv6-lts
-    - arm64-lts
-    - arm64-musl
-
 kind: pipeline
 type: docker
 name: default
-steps:
-  - name: build
-    image: dockcross/${OS}-${ARCH}
-    commands:
-      - ls -alh
-      - cmake . -Bbuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=install
-      - cmake --build build --config ${BUILD_TYPE} -- -j `nproc`
-      # - cmake --build build --config Debug --target install
 
+steps:
+  - name: configure
+    image: dockcross/linux-x64
+    pull: if-not-exists
+    commands:
+      - cmake . -Bbuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+trigger:
+  ref:
+    - refs/heads/develop
+    - refs/heads/master
+    - refs/tags/**
+    - refs/pull/**
