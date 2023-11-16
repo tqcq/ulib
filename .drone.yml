@@ -5,6 +5,7 @@ steps:
   - name: build
     image: xwtkdym/ubuntu:ci
     commands:
-      - cmake . -Bbuild
-      - cmake --build build --target
-      - cmake --build build --install
+      - ls -alh
+      - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install
+      - cmake --build build --config Debug -- -j `nproc`
+      - cmake --build build --config Debug --target install
