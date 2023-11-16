@@ -1,5 +1,5 @@
 kind: template
-load: drone/build.yaml
+load: build.yaml
 data:
   image_name: x64
   build:
