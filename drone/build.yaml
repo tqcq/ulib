@@ -14,7 +14,7 @@ steps:
     {{ end }}
     {{ range $build_types }}
     - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
-    - cmake --build build-{{$image_name}}-{{.}} --config={{.}} -- -j`nproc`
+    - cmake --build build-{{$image_name}}-{{.}} --config {{.}} -- -j`nproc`
     {{end}}
   {{ end }}
 
