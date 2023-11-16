@@ -1,0 +1,10 @@
+kind: pipeline
+type: docker
+name: default
+steps:
+  - name: build
+    image: xwtkdym/ubuntu:ci
+    commands:
+      - cmake . -Bbuild
+      - cmake --build build --target
+      - cmake --build build --install
