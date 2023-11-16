@@ -12,3 +12,8 @@ steps:
     - cmake --build build-{{$image_name}}-{{.}} --config={{.}} -- -j`nproc`
     {{end}}
   {{ end }}
+
+  - name: list all build dir
+    image: alpine
+    commands:
+      - ls -l build-*
