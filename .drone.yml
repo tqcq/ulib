@@ -1,10 +1,10 @@
 kind: pipeline
-type: build.yaml
+type: drone/build.yaml
 
 data:
   image_name: x64
   build:
-    - arch: x64
+    - arch: x64-Debug
       type: Debug
-    - arch: x64
+    - arch: x64-Release
       type: Release
