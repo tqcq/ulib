@@ -5,6 +5,8 @@
 #ifndef ULIB_SRC_NETWORK_SOCKET_SERVER_H_
 #define ULIB_SRC_NETWORK_SOCKET_SERVER_H_
 
+#include <memory>
+
 #include "network/socket_factory.h"
 #include "units/time_delta.h"
 #include "synchronization/event.h"
