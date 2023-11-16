@@ -8,4 +8,4 @@ steps:
       - ls -alh
       - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install
       - cmake --build build --config Debug -- -j `nproc`
-      - cmake --build build --config Debug --target install
+      # - cmake --build build --config Debug --target install
