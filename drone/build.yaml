@@ -2,10 +2,13 @@ kind: pipeline
 type: docker
 name: default
 steps:
-  - name: build {{ .input.image_name }}
-    image: dockcross/{{ .input.image_name }}
+  {{ range .input.builds }}
+  {{ $image_name := .image_name }}
+  - name: build {{ .image_name }}
+    image: dockcross/{{ .image_name }}
     commands:
-    {{ range .input.build }}
-    - cmake . -Bbuild-{{.arch}} -DCMAKE_BUILD_TYPE={{.type}}
-    - cmake --build build-{.arch} --config={{.type}} -- -j`nproc`
-    {{ end }}
+    {{ range .build_types }}
+    - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
+    - cmake --build build-{{$image_name}}-{{.}} --config={{.}} -- -j`nproc`
+    {{end}}
+  {{ end }}

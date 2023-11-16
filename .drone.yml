@@ -1,9 +1,8 @@
 kind: template
 load: build.yaml
 data:
-  image_name: x64
-  build:
-    - arch: x64-Debug
-      type: Debug
-    - arch: x64-Release
-      type: Release
+  builds:
+  - image_name: linux-x64
+    build_types:
+      - Debug
+      - Release
