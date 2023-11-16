@@ -1,40 +1,10 @@
 kind: pipeline
-type: docker
-name: default
+type: build.yaml
 
-matrix:
-  BUILD_TYPE:
-    - Debug
-    - Release
-
-steps:
-  - name: build gcc x64
-    image: dockcross/linux-x64
-    pull: if-not-exists
-    commands:
-      - cmake . -Bbuild-x64 -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-      - cmake --build build-x64 --config ${BUILD_TYPE} -- -j`nproc`
-  - name: build mips lts
-    image: dockcross/linux-mips-lts
-    pull: if-not-exists
-    commands:
-      - cmake . -Bbuild-mips-lts -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-      - cmake --build build-mips-lts --config ${BUILD_TYPE} -- -j`nproc`
-  - name: build mipsel -lts
-    image: dockcross/linux-mipsel-lts
-    pull: if-not-exists
-    commands:
-      - cmake . -Bbuild-mipsel-lts -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-      - cmake --build build-mipsel-lts --config ${BUILD_TYPE} -- -j`nproc`
-  - name: build arm64 lts
-    image: dockcross/linux-arm64-lts
-    pull: if-not-exists
-    commands:
-      - cmake . -Bbuild-arm64-lts -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-      - cmake --build build-arm64-lts --config ${BUILD_TYPE} -- -j`nproc`
-trigger:
-  ref:
-    - refs/heads/develop
-    - refs/heads/master
-    - refs/tags/**
-    - refs/pull/**
+data:
+  image_name: x64
+  build:
+    - arch: x64
+      type: Debug
+    - arch: x64
+      type: Release
