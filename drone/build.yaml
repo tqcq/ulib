@@ -6,15 +6,26 @@ steps:
   {{ $before_commands := .input.before_commands }}
   {{ $after_commands := .input.after_commands }}
   {{ $default_build_types := .input.default_build_types }}
+
   {{ range .input.builds }}
   {{ $image_name := .image_name }}
   - name: build {{ .image_name }}
     image: dockcross/{{ .image_name }}
     commands:
+    {{/* set build dir to env */}}
+    - export CURRENT_BUILD_DIR=build-{{$image_name}}
+
+    {{/* >>> expand prepare commands */}}
     {{ range $prepare_commands }}
     - {{ . }}
     {{ end }}
 
+    {{/* >>> expand before commands */}}
+    {{ range $before_commands }}
+    - {{ . }}
+    {{ end }}
+
+    {{/* >>> expand commands */}}
     {{ $build_types := $default_build_types }}
     {{ if .build_types }}
         {{ $build_types := .build_types }}
@@ -24,6 +35,7 @@ steps:
     - cmake --build build-{{$image_name}}-{{.}} --config {{.}} -- -j`nproc`
     {{end}}
 
+    {{/* >>> expand after commands */}}
     {{ range $after_commands }}
     - {{ . }}
     {{ end }}
