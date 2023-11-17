@@ -32,7 +32,7 @@ steps:
     - export BUILD_TYPE={{.}}
     - export BUILD_DIR=build-{{$image_name}}-{{.}}
     - echo $BUILD_TYPE
-    - echo $CURRENT_BUILD_DIR
+    - echo $BUILD_DIR
 
     {{ range $before_commands }}
     - {{ . }}
