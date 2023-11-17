@@ -4,10 +4,17 @@ name: default
 steps:
   {{ $prepare_commands := .input.prepare_commands }}
   {{ $before_commands := .input.before_commands }}
+  {{ $build_commands:= .input.build_commands }}
   {{ $after_commands := .input.after_commands }}
   {{ $default_build_types := .input.default_build_types }}
 
   {{ range .input.builds }}
+  {{ $cmake_configure_args := .cmake_configure_args }}
+  {{ $image_name := .image_name }}
+  {{ if .cmake_configure_args }}
+    {{ $cmake_configure_args := .cmake_configure_args }}
+  {{ end }}
+
   {{ $image_name := .image_name }}
   - name: build {{ .image_name }}
     image: dockcross/{{ .image_name }}
@@ -31,8 +38,9 @@ steps:
     - {{ . }}
     {{ end }}
 
-    - cmake . -B$BUILD_DIR -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_VERBOSE_MAKEFILE=ON
-    - cmake --build $BUILD_DIR --config $BUILD_TYPE -- -j`nproc`
+    {{ range $build_commands }}
+    - {{ . }}
+    {{ end }}
 
     {{ range $after_commands }}
     - {{ . }}
