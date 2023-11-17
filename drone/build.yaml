@@ -23,7 +23,7 @@ steps:
 
     {{ range $build_types }}
     - export BUILD_TYPE={{.}}
-    - export CURRENT_BUILD_DIR=build-{{$image_name}}-{{.}}
+    - export BUILD_DIR=build-{{$image_name}}-{{.}}
     - echo $BUILD_TYPE
     - echo $CURRENT_BUILD_DIR
 
@@ -31,8 +31,8 @@ steps:
     - {{ . }}
     {{ end }}
 
-    - cmake . -B$CURRENT_BUILD_DIR -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-    - cmake --build $CURRENT_BUILD_DIR --config $BUILD_TYPE -- -j`nproc`
+    - cmake . -B$BUILD_DIR -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+    - cmake --build $BUILD_DIR --config $BUILD_TYPE -- -j`nproc`
 
     {{ range $after_commands }}
     - {{ . }}
