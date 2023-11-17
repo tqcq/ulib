@@ -59,9 +59,3 @@ steps:
     {{ range .input.builds }}
     - build {{ .image_name }}
     {{ end }}
-
-trigger:
-  branch:
-    - refs/heads/**
-    - refs/tags/**
-    - refs/pull/**
