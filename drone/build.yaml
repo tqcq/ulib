@@ -12,16 +12,9 @@ steps:
   - name: build {{ .image_name }}
     image: dockcross/{{ .image_name }}
     commands:
-    {{/* set build dir to env */}}
-    - export CURRENT_BUILD_DIR=build-{{$image_name}}
 
     {{/* >>> expand prepare commands */}}
     {{ range $prepare_commands }}
-    - {{ . }}
-    {{ end }}
-
-    {{/* >>> expand before commands */}}
-    {{ range $before_commands }}
     - {{ . }}
     {{ end }}
 
@@ -30,15 +23,28 @@ steps:
     {{ if .build_types }}
         {{ $build_types := .build_types }}
     {{ end }}
-    {{ range $build_types }}
-    - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
-    - cmake --build build-{{$image_name}}-{{.}} --config {{.}} -- -j`nproc`
-    {{end}}
 
-    {{/* >>> expand after commands */}}
-    {{ range $after_commands }}
+
+    {{ range $build_types }}
+    {{/* set build dir to env */}}
+    - export BUILD_TYPE={{.}}
+    - export CURRENT_BUILD_DIR=build-{{$image_name}}-{{.}}
+
+    {{/* >>> expand before commands */}}
+    {{ range $before_commands }}
     - {{ . }}
     {{ end }}
+
+    - cmake . -B${CURRENT_BUILD_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+    - cmake --build ${CURRENT_BUILD_DIR} --config ${BUILD_TYPE} -- -j`nproc`
+
+    { { /* >>> expand after commands */ } }
+    { { range $after_commands } }
+    - { { . } }
+    { { end } }
+    {{ end }}
+
+
   {{ end }}
 
   - name: list all build dir
