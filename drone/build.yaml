@@ -3,6 +3,8 @@ type: docker
 name: default
 steps:
   {{ $prepare_commands := .input.prepare_commands }}
+  {{ $before_commands := .input.before_commands }}
+  {{ $after_commands := .input.after_commands }}
   {{ $default_build_types := .input.default_build_types }}
   {{ range .input.builds }}
   {{ $image_name := .image_name }}
@@ -21,6 +23,10 @@ steps:
     - cmake . -Bbuild-{{$image_name}}-{{.}} -DCMAKE_BUILD_TYPE={{.}}
     - cmake --build build-{{$image_name}}-{{.}} --config {{.}} -- -j`nproc`
     {{end}}
+
+    {{ range $after_commands }}
+    - {{ . }}
+    {{ end }}
   {{ end }}
 
   - name: list all build dir
