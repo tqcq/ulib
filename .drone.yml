@@ -30,4 +30,3 @@ data:
     - image_name: windows-static-x64
     - image_name: windows-static-x86
     - image_name: windows-x64
-
