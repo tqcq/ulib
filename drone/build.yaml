@@ -2,12 +2,17 @@ kind: pipeline
 type: docker
 name: default
 steps:
+  {{ $prepare_commands := .input.prepare_commands }}
   {{ $default_build_types := .input.default_build_types }}
   {{ range .input.builds }}
   {{ $image_name := .image_name }}
   - name: build {{ .image_name }}
     image: dockcross/{{ .image_name }}
     commands:
+    {{ range $prepare_commands }}
+    - {{ . }}
+    {{ end }}
+
     {{ $build_types := $default_build_types }}
     {{ if .build_types }}
         {{ $build_types := .build_types }}
