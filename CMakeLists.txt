@@ -17,7 +17,9 @@ add_library(${PROJECT_NAME} STATIC ""
         src/network/socket_factory.cpp
         src/network/socket_address.cpp
         src/network/socket_server.cpp
-        src/synchronization/event.cpp)
+        src/synchronization/event.cpp
+        src/logging/log.cpp
+)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 target_sources(${PROJECT_NAME}
