@@ -73,9 +73,7 @@ jobs:
           cmake .. -DULIB_BUILD_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=../toolchains/mips64el-linux-gnuabi64.toolchain.cmake
 
       - name: build
-        run: |
-          cd build
-          cmake --build . --config Release --target all -- -j `nproc`
+        run: cmake --build -j `nproc`
 
       - name: test
         run: |
