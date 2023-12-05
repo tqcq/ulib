@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 
+project(ulib LANGUAGES CXX VERSION 0.1.0)
 option(ULIB_BUILD_TESTS "Build tests" OFF)
 
-project(ulib LANGUAGES CXX VERSION 0.1.0)
+find_package(Threads REQUIRED)
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -36,6 +37,10 @@ if (ULIB_BUILD_TESTS)
 
     add_executable(ulib_test ""
             src/base/location_unittest.cpp)
+    set_target_properties(ulib_test PROPERTIES
+            CXX_STANDARD 11
+            CXX_STANDARD_REQUIRED YES
+            CXX_EXTENSIONS NO)
 
     target_link_libraries(ulib_test PRIVATE
             ulib
