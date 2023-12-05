@@ -47,4 +47,5 @@ _deps
 
 # Clion
 .idea/
-cmake-*
+cmake-build-*
+build/

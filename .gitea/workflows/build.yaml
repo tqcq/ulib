@@ -52,7 +52,13 @@ jobs:
         run: |
           sudo apt-get update -y 
           sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
-          ${{ env.build_command }}
+          ${{ env.build_command }} -DULIB_BUILD_TESTS=ON
+
+      - name: run_gtest
+        if: matrix.toolchain == 'host.toolchain.cmake'
+        run: |
+          cd ${{ github.workspace }}
+          cmake --build build --config ${{ matrix.build_type }} --target test 
 
       - name: build-afl
         if: matrix.toolchain == 'host-afl.toolchain.cmake'

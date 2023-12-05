@@ -36,3 +36,9 @@ add_executable(ulib_main_test src/main.cpp)
 target_link_libraries(ulib_main_test PRIVATE ${PROJECT_NAME})
 
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
+
+if(ULIB_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(3party/googletest)
+    add_subdirectory(tests)
+endif()

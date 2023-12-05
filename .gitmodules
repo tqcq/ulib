@@ -1,0 +1,4 @@
+[submodule "3party/googletest"]
+	path = 3party/googletest
+	url = https://code.uocat.com/3party/googletest
+	branch = release-1.8.1
