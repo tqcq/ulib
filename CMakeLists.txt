@@ -21,8 +21,15 @@ set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/fmt)
 
 option(ULIB_BUILD_TESTS "Build tests" OFF)
+option(ULIB_SHARED_LIB "Build shared library" OFF)
 
-add_library(${PROJECT_NAME} STATIC
+if (ULIB_SHARED_LIB)
+    add_library(${PROJECT_NAME} SHARED "")
+else()
+    add_library(${PROJECT_NAME} STATIC "")
+endif()
+
+target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/empty.cpp
         src/ulib/log/logger.cpp
         src/ulib/log/log.cpp
