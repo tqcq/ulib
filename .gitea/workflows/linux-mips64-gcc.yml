@@ -72,6 +72,11 @@ jobs:
           mkdir build && cd build
           cmake .. -DULIB_BUILD_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=../toolchains/mips64el-linux-gnuabi64.toolchain.cmake
 
+      - name: build
+        run: |
+          cd build
+          cmake --build . --config Release --target all -- -j `nproc`
+
       - name: test
         run: |
           export PATH=$GITHUB_WORKSPACE/qemu-install/bin:$PATH
