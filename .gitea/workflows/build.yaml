@@ -56,8 +56,8 @@ jobs:
       - name: build-afl
         if: matrix.toolchain == 'host-afl.toolchain.cmake'
         run: |
-          apt-get update -y 
-          apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config afl++ cmake make gcc g++
+          sudo apt-get update -y 
+          sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config afl++ cmake make gcc g++
           export AFL_LLVM_LAF_ALL=1
           export CC=/usr/bin/afl-clang-fast
           export CXX=/usr/bin/afl-clang-fast++
