@@ -23,9 +23,6 @@ add_library(${PROJECT_NAME} STATIC
 target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC src)
-#target_sources(${PROJECT_NAME}
-#        PRIVATE
-#)
 
-add_executable(main src/main.cpp)
-target_link_libraries(main PRIVATE ${PROJECT_NAME})
+add_executable(ulib_main_test src/main.cpp)
+target_link_libraries(ulib_main_test PRIVATE ${PROJECT_NAME})
