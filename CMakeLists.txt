@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.10)
 option(ULIB_BUILD_TESTS "Build tests" OFF)
 
 project(ulib LANGUAGES CXX VERSION 0.1.0)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(${PROJECT_NAME} STATIC ""
         src/base/location.cpp
