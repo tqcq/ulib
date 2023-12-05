@@ -49,8 +49,8 @@ jobs:
       - name: build
         if: matrix.toolchain == 'host.toolchain.cmake'
         run: |
-          apt-get update -y 
-          apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
+          sudo apt-get update -y 
+          sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
           ${{ env.build_command }}
 
       - name: build-afl
