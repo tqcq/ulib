@@ -10,6 +10,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 set(FMT_USE_CPP11 OFF)
 set(FMT_TEST OFF)
+set(FMT_USE_CPP11 OFF)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/fmt)
 
 option(ULIB_BUILD_TESTS "Build tests" OFF)
