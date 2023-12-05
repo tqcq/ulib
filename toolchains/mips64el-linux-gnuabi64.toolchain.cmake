@@ -2,9 +2,8 @@ set(CMAKE_CROSSCOMPILING TRUE)
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR mips64el)
 
-set(CMAKE_C_COMPILER "/opt/gcc-4.9.3-64-gnu/bin/mips64el-linux-gcc")
-set(CMAKE_CXX_COMPILER "/opt/gcc-4.9.3-64-gnu/bin/mips64el-linux-g++")
-set(CMAKE_FIND_ROOT_PATH "/opt/gcc-4.9.3-64-gnu/")
+set(CMAKE_C_COMPILER "mips64el-linux-gnuabi64-gcc")
+set(CMAKE_CXX_COMPILER "mips64el-linux-gnuabi64-g++")
 
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_PROGRAM)
     set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
