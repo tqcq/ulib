@@ -32,9 +32,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 
-add_executable(ulib_main_test src/main.cpp)
-target_link_libraries(ulib_main_test PRIVATE ${PROJECT_NAME})
-
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 
 if(ULIB_BUILD_TESTS)

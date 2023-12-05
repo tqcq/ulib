@@ -33,7 +33,7 @@ jobs:
                 -DCMAKE_TOOLCHAIN_FILE=toolchains/${{ matrix.toolchain }} \
                 -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
                 -DCMAKE_INSTALL_PREFIX=./install \
-                -DCMAKE_VERBOSE_MAKEFILE=ON
+                -DCMAKE_VERBOSE_MAKEFILE=ON ${CUSTOM_CMAKE_ARGS}
         cmake --build build --config ${{ matrix.build_type }} --target all -- -j `nproc`
         cmake --build build --config ${{ matrix.build_type }} --target install
     steps:
@@ -52,7 +52,7 @@ jobs:
         run: |
           sudo apt-get update -y 
           sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
-          ${{ env.build_command }} -DULIB_BUILD_TESTS=ON
+          ${{ env.build_command }} 
 
       - name: run_gtest
         if: matrix.toolchain == 'host.toolchain.cmake'
@@ -68,6 +68,7 @@ jobs:
           export AFL_LLVM_LAF_ALL=1
           export CC=/usr/bin/afl-clang-fast
           export CXX=/usr/bin/afl-clang-fast++
+          export CUSTOM_CMAKE_ARGS="-DULIB_BUILD_TESTS=ON"
           ${{ env.build_command }}
 
       - name: build-in-centos
