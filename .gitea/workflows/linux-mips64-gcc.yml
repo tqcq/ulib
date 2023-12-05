@@ -28,21 +28,12 @@ jobs:
   linux-gcc-mips64el:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-
       - name: cache-qemu
         id: cache-qemu
         uses: actions/cache@v3
         with:
           path: qemu-install
           key: qemu-mips64el-install-20220502-2
-      - name: install-qemu-build-deps
-        if: steps.cache-qemu.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y autoconf automake autotools-dev ninja-build
 
       - name: checkout-qemu
         #uses: actions/checkout@v4
@@ -53,6 +44,12 @@ jobs:
           git remote add origin https://gitlab.com/qemu-project/qemu.git
           git fetch origin f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
           git checkout f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+
+      - name: install-qemu-build-deps
+        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y autoconf automake autotools-dev ninja-build
 
       - name: qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
@@ -66,6 +63,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install g++-mips64el-linux-gnuabi64
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: configure
         run: |
