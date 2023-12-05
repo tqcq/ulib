@@ -47,11 +47,11 @@ jobs:
       - name: checkout-qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
-        with:
-          github-server-url: https://gitlab.com
-          repository: qemu-project/qemu.git
-          path: qemu
-          ref: f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+        run: |
+          mkdir qemu && cd qemu
+          git init
+          git remote add origin https://gitlab.com/qemu-project/qemu.git
+          git fetch origin f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
 
       - name: qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
