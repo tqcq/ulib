@@ -1,7 +1,21 @@
 name: linux-mips64-gcc
 on:
-  - push
-  - pull_request
+  push:
+    paths:
+      - '.gitea/workflows/linux-mips64-gcc.yml'
+      - 'toolchains/mips64el-linux-gnuabi64.toolchain.cmake'
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'cmake/**'
+  pull_request:
+    paths:
+      - '.gitea/workflows/linux-mips64-gcc.yml'
+      - 'toolchains/mips64el-linux-gnuabi64.toolchain.cmake'
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'cmake/**'
 
 concurrency:
   group: linux-mips64-gcc-${{ github.ref }}
