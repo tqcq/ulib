@@ -28,6 +28,10 @@ jobs:
   linux-gcc-mips64el:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
       - name: cache-qemu
         id: cache-qemu
         uses: actions/cache@v3
@@ -69,10 +73,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install g++-mips64el-linux-gnuabi64
-
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: configure
         run: |
