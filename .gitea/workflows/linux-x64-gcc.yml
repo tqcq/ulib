@@ -32,7 +32,7 @@ jobs:
       - name: configure-shared
         runs: |
           mkdir build-shared && cd build-shared
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DULIB_BUILD_TESTS=ON -DULIB_SHARED=ON
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DULIB_BUILD_TESTS=ON -DULIB_SHARED_LIB=ON
       - name: build-shared
         runs: |
           cmake --build build-shared -j `nproc`
