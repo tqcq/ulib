@@ -42,7 +42,7 @@ jobs:
           submodules: true
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: build
+      - name: build-host
         if: matrix.toolchain == 'host.toolchain.cmake'
         run: |
           sudo apt-get update -y 
@@ -55,7 +55,7 @@ jobs:
           cd ${{ github.workspace }}
           cmake --build build --config ${{ matrix.build_type }} --target test 
 
-      - name: build-afl
+      - name: build-host-afl
         if: matrix.toolchain == 'host-afl.toolchain.cmake'
         run: |
           sudo apt-get update -y 
