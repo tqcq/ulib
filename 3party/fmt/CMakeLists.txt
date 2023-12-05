@@ -93,6 +93,7 @@ if (WIN32)
 else ()
   check_symbol_exists(open fcntl.h HAVE_OPEN)
 endif ()
+check_symbol_exists(strtod_l stdlib.h HAVE_STRTOD_L)
 
 add_subdirectory(fmt)
 

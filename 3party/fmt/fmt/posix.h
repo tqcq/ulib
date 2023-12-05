@@ -327,6 +327,10 @@ class Locale {
   static double strtod_l(const char *nptr, char **endptr, _locale_t locale) {
     return _strtod_l(nptr, endptr, locale);
   }
+# elif !defined(HAVE_STRTOD_L)
+     static double strtod_l(const char *nptr, char **endptr, locale_t) {
+        return atof(nptr);
+     }
 # endif
 
   locale_t locale_;
