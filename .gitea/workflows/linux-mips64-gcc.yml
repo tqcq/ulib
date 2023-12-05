@@ -52,6 +52,7 @@ jobs:
           git init
           git remote add origin https://gitlab.com/qemu-project/qemu.git
           git fetch origin f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+          git checkout f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
 
       - name: qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
