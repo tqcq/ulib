@@ -80,7 +80,7 @@ jobs:
           cmake .. -DULIB_BUILD_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=../toolchains/mips64el-linux-gnuabi64.toolchain.cmake
 
       - name: build
-        run: cmake --build build -j `nproc`
+        run: cmake --build build --target all -j `nproc`
 
       - name: test
         run: |
