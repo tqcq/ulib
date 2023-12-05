@@ -1,8 +1,19 @@
 name: rpcrypto-build
 on:
-  - push
-  - pull_request
-
+  push:
+    paths:
+      - '.gitea/workflows/build.yaml'
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'cmake/**'
+  pull_request:
+    paths:
+      - '.gitea/workflows/build.yaml'
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'cmake/**'
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
