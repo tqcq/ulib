@@ -1,0 +1,75 @@
+name: rpcrypto-build
+on:
+  - push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    strategy:
+      matrix:
+        build_type:
+          - Debug
+          - Release
+        toolchain:
+          - host.toolchain.cmake
+          - host-afl.toolchain.cmake
+          - hisiv500.toolchain.cmake
+          - hisiv510.toolchain.cmake
+          - himix200.toolchain.cmake
+          - mips64el-linux-gnuabi64.toolchain.cmake
+          - mipsel-openwrt-linux-musl.toolchain.cmake
+          - mipsel-openwrt-linux.toolchain.cmake
+    runs-on: ubuntu-20.04
+    env:
+      build_command: |
+        cd ${{ github.workspace }}
+        pwd
+        ls -alh
+        # /bin/bash scripts/install-flatc.sh
+        cmake . -Bbuild \
+                -DCMAKE_TOOLCHAIN_FILE=toolchains/${{ matrix.toolchain }} \
+                -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+                -DCMAKE_INSTALL_PREFIX=./install \
+                -DCMAKE_VERBOSE_MAKEFILE=ON
+        cmake --build build --config ${{ matrix.build_type }} --target all -- -j `nproc`
+        cmake --build build --config ${{ matrix.build_type }} --target install
+    steps:
+      #      - name: Install Dependencies
+      #        run: |
+      #          apt-get update -y
+      #          apt-get install -y \
+      #            cmake make g++ libssl-dev pkg-config autoconf libtool
+      - uses: actions/checkout@v4
+      #      - name: configure
+      #        run: cmake . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+      #      - name: build
+      #        run: cmake --build build --config ${{ matrix.build_type }} --target all -- -j `nproc`
+      - name: build
+        if: matrix.toolchain == 'host.toolchain.cmake'
+        run: |
+          apt-get update -y 
+          apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
+          ${{ env.build_command }}
+
+      - name: build-afl
+        if: matrix.toolchain == 'host-afl.toolchain.cmake'
+        run: |
+          apt-get update -y 
+          apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config afl++ cmake make gcc g++
+          export AFL_LLVM_LAF_ALL=1
+          export CC=/usr/bin/afl-clang-fast
+          export CXX=/usr/bin/afl-clang-fast++
+          ${{ env.build_command }}
+
+      - name: build-in-centos
+        uses: addnab/docker-run-action@v3
+        if: matrix.toolchain != 'host.toolchain.cmake' && matrix.toolchain != 'host-afl.toolchain.cmake'
+        with:
+          image: tqcq/hisi:centos
+          options: --rm --volumes-from ${{ env.JOB_CONTAINER_NAME }}
+          run: |
+            yum clean all
+            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config 
+            ${{ env.build_command }}
