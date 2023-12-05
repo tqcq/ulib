@@ -162,7 +162,8 @@ typedef __int64          intmax_t;
 #endif
 
 #ifdef FMT_HAS_CXX17_ATTRIBUTE_MAYBE_UNUSED
-# define FMT_MAYBE_UNUSED [[maybe_unused]]
+// # define FMT_MAYBE_UNUSED [[maybe_unused]]
+# define FMT_MAYBE_UNUSED
 // g++/clang++ also support [[gnu::unused]]. However, we don't use it.
 #elif defined(__GNUC__)
 # define FMT_MAYBE_UNUSED __attribute__((unused))
