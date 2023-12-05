@@ -44,11 +44,12 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y autoconf automake autotools-dev ninja-build
 
-      - name: checkout-qeu
+      - name: checkout-qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
-          repository: https://gitlab.com/qemu-project/qemu
+          github-server-url: https://gitlab.com
+          repository: qemu-project/qemu
           path: qemu
           ref: f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
 
