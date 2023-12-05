@@ -16,26 +16,26 @@ jobs:
         with:
           submodules: true
       - name: update
-        runs: sudo apt-get update
+        run: sudo apt-get update
 
       - name: configure
-        runs: |
+        run: |
           mkdir build && cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release -DULIB_BUILD_TESTS=ON
       - name: build
-        runs: |
+        run: |
           cmake --build build -j `nproc`
       - name: test
-        runs: |
+        run: |
           cd build && ctest --output-on-failure -j `nproc`
 
       - name: configure-shared
-        runs: |
+        run: |
           mkdir build-shared && cd build-shared
           cmake .. -DCMAKE_BUILD_TYPE=Release -DULIB_BUILD_TESTS=ON -DULIB_SHARED_LIB=ON
       - name: build-shared
-        runs: |
+        run: |
           cmake --build build-shared -j `nproc`
       - name: test-shared
-        runs: |
+        run: |
           cd build-shared && ctest --output-on-failure -j `nproc`
