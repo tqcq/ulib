@@ -46,8 +46,9 @@ jobs:
           mkdir qemu && cd qemu
           git init
           git remote add origin https://gitlab.com/qemu-project/qemu.git
-          git fetch --depth=1 --progress origin f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+          git fetch --depth=1 origin f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
           git checkout f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+          git submodule update --init --recursive --recommend-shallow 
 
       - name: rerun-on-checkout-failure
         if: steps.cache-qemu.outputs.cache-hit != 'true' && failure()
