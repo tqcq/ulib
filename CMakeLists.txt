@@ -5,6 +5,16 @@ set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+option(ULIB_BUILD_TESTS "Build tests" OFF)
+option(ULIB_SHARED_LIB "Build shared library" OFF)
+
+if (ULIB_SHARED_LIB)
+    add_library(${PROJECT_NAME} SHARED "")
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+else()
+    add_library(${PROJECT_NAME} STATIC "")
+endif()
+
 find_package(Threads REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -15,19 +25,12 @@ endif ()
 if (POLICY CMP0048)
     cmake_policy(SET CMP0048 NEW)
 endif ()
+
 set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 set(FMT_TEST OFF CACHE BOOL "Build tests" FORCE)
 set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/fmt)
 
-option(ULIB_BUILD_TESTS "Build tests" OFF)
-option(ULIB_SHARED_LIB "Build shared library" OFF)
-
-if (ULIB_SHARED_LIB)
-    add_library(${PROJECT_NAME} SHARED "")
-else()
-    add_library(${PROJECT_NAME} STATIC "")
-endif()
 
 target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/empty.cpp
