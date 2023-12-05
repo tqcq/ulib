@@ -37,16 +37,11 @@ jobs:
         cmake --build build --config ${{ matrix.build_type }} --target all -- -j `nproc`
         cmake --build build --config ${{ matrix.build_type }} --target install
     steps:
-      #      - name: Install Dependencies
-      #        run: |
-      #          apt-get update -y
-      #          apt-get install -y \
-      #            cmake make g++ libssl-dev pkg-config autoconf libtool
       - uses: actions/checkout@v4
-      #      - name: configure
-      #        run: cmake . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-      #      - name: build
-      #        run: cmake --build build --config ${{ matrix.build_type }} --target all -- -j `nproc`
+        with:
+          submodules: true
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: build
         if: matrix.toolchain == 'host.toolchain.cmake'
         run: |
