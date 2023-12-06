@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - '.gitea/workflows/build.yaml'
+      - 'toolchains/hisiv510.toolchain.cmake'
+      - 'toolchains/himix200.toolchain.cmake'
+      - 'toolchains/mipsel-openwrt-linux-musl.toolchain.cmake'
+      - 'toolchains/mipsel-openwrt-linux.toolchain.cmake'
       - 'src/**'
       - 'tests/**'
       - 'CMakeLists.txt'
@@ -10,6 +14,10 @@ on:
   pull_request:
     paths:
       - '.gitea/workflows/build.yaml'
+      - 'toolchains/hisiv510.toolchain.cmake'
+      - 'toolchains/himix200.toolchain.cmake'
+      - 'toolchains/mipsel-openwrt-linux-musl.toolchain.cmake'
+      - 'toolchains/mipsel-openwrt-linux.toolchain.cmake'
       - 'src/**'
       - 'tests/**'
       - 'CMakeLists.txt'
