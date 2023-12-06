@@ -50,19 +50,10 @@ jobs:
 
       - name: build-qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
-        uses: addnab/docker-run-action@v3
-        with:
-          image: tqcq/hisi:centos
-          options: --rm --volumes-from ${{ env.JOB_CONTAINER_NAME }}
-          run: |
-            cd ${{ github.workspace }}
-            yum clean all
-            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config python3 glibc
-            dnf -y --enablerepo=PowerTools install ninja-build
-            cd qemu
-            ./configure --target-list=arm-linux-user --prefix=$GITHUB_WORKSPACE/qemu-install
-            make -j `nproc`
-            make install
+        run: |
+          ./configure --target-list=arm-linux-user --prefix=$GITHUB_WORKSPACE/qemu-install
+          make -j `nproc`
+          make install
 
       - name: set-qemu-cache
         uses: actions/cache/save@v3
@@ -74,12 +65,12 @@ jobs:
       - name: build-in-centos
         uses: addnab/docker-run-action@v3
         with:
-          image: tqcq/hisi:centos
+          image: tqcq/ubuntu:hisi
           options: --rm --volumes-from ${{ env.JOB_CONTAINER_NAME }}
           run: |
             cd ${{ github.workspace }}
-            yum clean all
-            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config
+            sudo apt-get update
+            sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
             cmake . -Bbuild -DCMAKE_TOOLCHAIN_FILE=toolchains/hisiv500.toolchain.cmake -DULIB_BUILD_TESTS=ON -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-arm;-L;/opt/hisi-linux/x86-arm/arm-hisiv500-linux/"
             cmake --build build --target all -- -j `nproc`
 
