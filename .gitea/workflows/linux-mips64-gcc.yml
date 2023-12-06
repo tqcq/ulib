@@ -63,6 +63,13 @@ jobs:
           make -j `nproc`
           make install
 
+      - name: set-qemu-cache
+        uses: actions/cache/save@v3
+        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        with:
+          key: qemu-mips64el-install-20220502-2
+          path: qemu-install
+
       - name: mips64el-gnuabi64-toolchain
         run: |
           sudo apt-get update
