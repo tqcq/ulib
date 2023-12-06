@@ -88,5 +88,6 @@ jobs:
           export PATH=$GITHUB_WORKSPACE/qemu-install/bin:$PATH
           cd build 
           qemu-mips64el --help
+          ls
           sleep 360
           TESTS_EXECUTABLE_LOADER=qemu-mips64el TESTS_EXECUTABLE_LOADER_ARGUMENTS="-L;/usr/mips64el-linux-gnuabi64" ctest --output-on-failure -j`nproc`
