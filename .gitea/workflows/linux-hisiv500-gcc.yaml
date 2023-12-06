@@ -57,7 +57,7 @@ jobs:
           run: |
             cd ${{ github.workspace }}
             yum clean all
-            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config python3
+            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config python3 glibc
             dnf -y --enablerepo=PowerTools install ninja-build
             cd qemu
             ./configure --target-list=arm-linux-user --prefix=$GITHUB_WORKSPACE/qemu-install

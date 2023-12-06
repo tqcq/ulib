@@ -28,7 +28,6 @@ jobs:
           # - host-afl.toolchain.cmake
           - hisiv510.toolchain.cmake
           - himix200.toolchain.cmake
-          # - mips64el-linux-gnuabi64.toolchain.cmake
           - mipsel-openwrt-linux-musl.toolchain.cmake
           - mipsel-openwrt-linux.toolchain.cmake
     runs-on: ubuntu-20.04
