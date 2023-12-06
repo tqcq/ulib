@@ -89,4 +89,4 @@ jobs:
           cd build 
           qemu-mips64el --help
           sleep 360
-          # TESTS_EXECUTABLE_LOADER=qemu-mips64el TESTS_EXECUTABLE_LOADER_ARGUMENTS="-L;/usr/mips64el-linux-gnuabi64" ctest --output-on-failure -j`nproc`
+          TESTS_EXECUTABLE_LOADER=qemu-mips64el TESTS_EXECUTABLE_LOADER_ARGUMENTS="-L;/usr/mips64el-linux-gnuabi64" ctest --output-on-failure -j`nproc`
