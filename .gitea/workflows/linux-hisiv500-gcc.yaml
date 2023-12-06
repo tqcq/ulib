@@ -79,6 +79,7 @@ jobs:
             cd ${{ github.workspace }}
             yum clean all
             yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config
+            dnf -y --enablerepo=PowerTools install ninja-build
             cmake . -Bbuild -DCMAKE_TOOLCHAIN_FILE=toolchains/hisiv500.toolchain.cmake -DULIB_BUILD_TESTS=ON -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-arm;-L;/opt/hisi-linux/x86-arm/arm-hisiv500-linux/"
             cmake --build build --target all -- -j `nproc`
 
