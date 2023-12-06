@@ -78,7 +78,7 @@ jobs:
             cd ${{ github.workspace }}
             yum clean all
             yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config
-            cmake . --build build -DCMAKE_TOOLCHAIN_FILE=toolchains/hisiv500.toolchain.cmake -DULIB_BUILD_TESTS=ON -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-arm;-L;/opt/hisi-linux/x86-arm/arm-hisiv500-linux/"
+            cmake . -Bbuild -DCMAKE_TOOLCHAIN_FILE=toolchains/hisiv500.toolchain.cmake -DULIB_BUILD_TESTS=ON -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-arm;-L;/opt/hisi-linux/x86-arm/arm-hisiv500-linux/"
             cmake --build build --target all -- -j `nproc`
             
             export PATH=${{ github.workspace }}/qemu-install/bin:$PATH
