@@ -62,6 +62,13 @@ jobs:
           make -j `nproc`
           make install
 
+      - name: set-qemu-cache
+        uses: actions/cache/save@v3
+        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        with:
+          key: qemu-hisiv500-install-20220502-2
+          path: qemu-install
+
       - name: build-in-centos
         uses: addnab/docker-run-action@v3
         with:
