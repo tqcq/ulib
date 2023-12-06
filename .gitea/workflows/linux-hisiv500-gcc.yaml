@@ -82,4 +82,4 @@ jobs:
             cmake --build build --target all -- -j `nproc`
             
             export PATH=${{ github.workspace }}/qemu-install/bin:$PATH
-            cmake --build build --target test -- -j `nproc` --output-on-failure
+            cd build && ctest --output-on-failure -j `nproc`
