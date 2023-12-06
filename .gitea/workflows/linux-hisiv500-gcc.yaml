@@ -37,7 +37,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: qemu-install
-          key: qemu-hisiv500-install-20220502-2
+          key: centos-qemu-hisiv500-install-20220502-2
 
       - name: checkout-qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache/save@v3
         if: steps.cache-qemu.outputs.cache-hit != 'true'
         with:
-          key: qemu-hisiv500-install-20220502-2
+          key: centos-qemu-hisiv500-install-20220502-2
           path: qemu-install
 
       - name: build-in-centos
