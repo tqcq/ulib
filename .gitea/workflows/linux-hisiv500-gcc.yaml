@@ -1,0 +1,77 @@
+name: linux-hisiv500-gcc
+on:
+  push:
+    paths:
+      - '.gitea/workflows/linux-hisiv500-gcc.yaml'
+      - 'toolchains/hisiv500.toolchain.cmake'
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'cmake/**'
+  pull_request:
+    paths:
+      - '.gitea/workflows/linux-hisiv500-gcc.yaml'
+      - 'toolchains/hisiv500.toolchain.cmake'
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'cmake/**'
+
+concurrency:
+  group: linux-hisiv500-gcc-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  - read
+
+jobs:
+  linux-gcc-hisiv500:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: cache-qemu
+        id: cache-qemu
+        uses: actions/cache@v3
+        with:
+          path: qemu-install
+          key: qemu-hisiv500-install-20220502-2
+
+      - name: checkout-qemu
+        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        run: |
+          mkdir qemu && cd qemu
+          git init
+          git remote add origin https://gitlab.com/qemu-project/qemu.git
+          git fetch --depth=1 origin f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+          git checkout f5643914a9e8f79c606a76e6a9d7ea82a3fc3e65
+
+      - name: install-qemu-build-deps
+        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y autoconf automake autotools-dev ninja-build
+
+      - name: qemu
+        if: steps.cache-qemu.outputs.cache-hit != 'true'
+        run: |
+          cd qemu
+          ./configure --target-list=arm-linux-user --prefix=$GITHUB_WORKSPACE/qemu-install
+          make -j `nproc`
+          make install
+
+      - name: build-in-centos
+        uses: addnab/docker-run-action@v3
+        with:
+          image: tqcq/hisi:centos
+          options: --rm --volumes-from ${{ env.JOB_CONTAINER_NAME }}
+          run: |
+            yum clean all
+            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config
+            cmake --build build -DCMAKE_TOOLCHAIN_FILE=toolchains/hisiv500.toolchain.cmake -DULIB_BUILD_TESTS=ON -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-arm;-L;/opt/hisi-linux/x86-arm/arm-hisiv500-linux/"
+            cmake --build build --target all -- -j `nproc`
+            
+            export PATH=${{ github.workspace }}/qemu-install/bin:$PATH
+            cmake --build build --target test -- -j `nproc` --output-on-failure

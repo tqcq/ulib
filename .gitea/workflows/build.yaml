@@ -26,7 +26,6 @@ jobs:
           - Release
         toolchain:
           # - host-afl.toolchain.cmake
-          - hisiv500.toolchain.cmake
           - hisiv510.toolchain.cmake
           - himix200.toolchain.cmake
           # - mips64el-linux-gnuabi64.toolchain.cmake
