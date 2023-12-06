@@ -57,7 +57,7 @@ jobs:
           run: |
             cd ${{ github.workspace }}
             yum clean all
-            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config python
+            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config python3
             cd qemu
             ./configure --target-list=arm-linux-user --prefix=$GITHUB_WORKSPACE/qemu-install
             make -j `nproc`
