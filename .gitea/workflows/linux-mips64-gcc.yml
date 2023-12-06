@@ -78,7 +78,7 @@ jobs:
       - name: configure
         run: |
           mkdir build && cd build
-          cmake .. -DULIB_BUILD_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=../toolchains/mips64el-linux-gnuabi64.toolchain.cmake
+          cmake .. -DULIB_BUILD_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=../toolchains/mips64el-linux-gnuabi64.toolchain.cmake -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-mips64el;-L;/usr/mips64el-linux-gnuabi64"
 
       - name: build
         run: cmake --build build --target all -j `nproc`
