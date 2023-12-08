@@ -58,7 +58,9 @@ jobs:
       - name: qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'
         run: |
-          cd qemu
+          ls 
+          cd $GITHUB_WORKSPACE/qemu
+          ls
           ./configure --target-list=mips64el-linux-user --prefix=$GITHUB_WORKSPACE/qemu-install
           make -j `nproc`
           make install
