@@ -82,13 +82,15 @@ jobs:
           export CUSTOM_CMAKE_ARGS="-DULIB_BUILD_TESTS=ON"
           ${{ env.build_command }}
 
-      - name: build-in-centos
+      - name: build-in-container
         uses: addnab/docker-run-action@v3
         if: matrix.toolchain != 'host.toolchain.cmake' && matrix.toolchain != 'host-afl.toolchain.cmake'
         with:
-          image: tqcq/hisi:centos
+
+          image: tqcq/ubuntu:hisi
           options: --rm --volumes-from ${{ env.JOB_CONTAINER_NAME }}
           run: |
-            yum clean all
-            yum install -y libarchive cmake make gcc gcc-c++ openssl-devel autoconf libtool pkg-config 
+            cd ${{ github.workspace }}
+            sudo apt-get update
+            sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
             ${{ env.build_command }}

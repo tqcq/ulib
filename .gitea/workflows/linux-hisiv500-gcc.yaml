@@ -69,7 +69,7 @@ jobs:
           key: qemu-hisiv500-install-20231206-1
           path: qemu-install
 
-      - name: build-in-centos
+      - name: build-in-container
         uses: addnab/docker-run-action@v3
         with:
           image: tqcq/ubuntu:hisi
