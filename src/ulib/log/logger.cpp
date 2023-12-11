@@ -23,10 +23,18 @@ Logger::GetInstance()
 
 Logger::Logger() {
     const char* env_level = getenv("ULIB_LOG_LEVEL");
-    printf("ULIB_LOG_LEVEL: %s\n", env_level);
     if (!env_level) {
         SetLogLevel(Level::kALL);
     } else {
+        char buffer[1024] =  "invalid ULIB_LOG_LEVEL=";
+        for (const char* ptr = env_level; ptr && *ptr; ++ptr) {
+            if (!isnumber(*ptr)) {
+                strncat(buffer + strlen(buffer), env_level, 1000);
+                Log(Level::kError, "logger.cpp", __FUNCTION__, __LINE__, "ulib.log", buffer);
+                return;
+            }
+        }
+
         int level = atoi(env_level);
         level = std::max(static_cast<int>(Level::kALL), std::min(static_cast<int>(Level::kOFF), level));
         SetLogLevel(static_cast<Level::LevelEnum>(level));
