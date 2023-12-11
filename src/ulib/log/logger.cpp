@@ -25,13 +25,14 @@ void
 Logger::Log(int32_t level, const char *file, const char *func, int32_t line, const char *msg)
 {
     const char *level_name = Level::ToString(level);
-    fmt::print("[{}] {}:{}@{} msg: {}", level_name, file + stripped_prefix_len_, line, func, msg);
+    std::string pattern = "[{}] {}:{}@{} msg: {}";
 
     // auto add CR
-    if (msg) {
-        size_t len = strlen(msg);
-        if (len > 0 && msg[len - 1] != '\n') { fmt::print("\n"); }
+    bool need_append_line_break = !msg || msg[strlen(msg) - 1] != '\n';
+    if (need_append_line_break) {
+        pattern.append(1, '\n');
     }
+    fmt::print(pattern, level_name, file + stripped_prefix_len_, line, func, msg);
 }
 
 void
