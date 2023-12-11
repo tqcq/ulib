@@ -49,3 +49,6 @@ _deps
 .idea/
 cmake-build-*
 build/
+
+.cache/
+compile_commands.json

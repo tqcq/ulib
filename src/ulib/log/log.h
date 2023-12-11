@@ -9,43 +9,43 @@
 
 namespace tqcq {
 
-#define _ULOG(level, ...) ::tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+#define _ULOG(level, ...)                 ::tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
 #define ULOG_SET_STRIPPED_PREFIX_LEN(len) ::tqcq::Logger::GetInstance().SetStrippedPrefixLen(len)
 
-#if ULOG_LEVEL >= ULOG_LEVEL_TRACE
-#    define ULOG_TRACE(...) _ULOG(ULOG_LEVEL_TRACE, __VA_ARGS__)
+#if ULOG_LEVEL <= ULOG_LEVEL_TRACE
+#define ULOG_TRACE(...) _ULOG(ULOG_LEVEL_TRACE, __VA_ARGS__)
 #else
-#    define ULOG_TRACE(...) ((void)0)
+#define ULOG_TRACE(...) ((void) 0)
 #endif
 
-#if ULOG_LEVEL >= ULOG_LEVEL_DEBUG
-#    define ULOG_DEBUG(...) _ULOG(ULOG_LEVEL_DEBUG, __VA_ARGS__)
+#if ULOG_LEVEL <= ULOG_LEVEL_DEBUG
+#define ULOG_DEBUG(...) _ULOG(ULOG_LEVEL_DEBUG, __VA_ARGS__)
 #else
-#    define ULOG_DEBUG(...) ((void)0)
+#define ULOG_DEBUG(...) ((void) 0)
 #endif
 
-#if ULOG_LEVEL >= ULOG_LEVEL_INFO
-#    define ULOG_INFO(...) _ULOG(ULOG_LEVEL_INFO, __VA_ARGS__)
+#if ULOG_LEVEL <= ULOG_LEVEL_INFO
+#define ULOG_INFO(...) _ULOG(ULOG_LEVEL_INFO, __VA_ARGS__)
 #else
-#    define ULOG_INFO(...) ((void)0)
+#define ULOG_INFO(...) ((void) 0)
 #endif
 
-#if ULOG_LEVEL >= ULOG_LEVEL_WARN
-#    define ULOG_WARN(...) _ULOG(ULOG_LEVEL_WARN, __VA_ARGS__)
+#if ULOG_LEVEL <= ULOG_LEVEL_WARN
+#define ULOG_WARN(...) _ULOG(ULOG_LEVEL_WARN, __VA_ARGS__)
 #else
-#    define ULOG_WARN(...) ((void)0)
+#define ULOG_WARN(...) ((void) 0)
 #endif
 
-#if ULOG_LEVEL >= ULOG_LEVEL_ERROR
-#    define ULOG_ERROR(...) _ULOG(ULOG_LEVEL_ERROR, __VA_ARGS__)
+#if ULOG_LEVEL <= ULOG_LEVEL_ERROR
+#define ULOG_ERROR(...) _ULOG(ULOG_LEVEL_ERROR, __VA_ARGS__)
 #else
-#    define ULOG_ERROR(...) ((void)0)
+#define ULOG_ERROR(...) ((void) 0)
 #endif
 
-#if ULOG_LEVEL >= ULOG_LEVEL_FATAL
-#    define ULOG_FATAL(...) _ULOG(ULOG_LEVEL_FATAL, __VA_ARGS__)
+#if ULOG_LEVEL <= ULOG_LEVEL_FATAL
+#define ULOG_FATAL(...) _ULOG(ULOG_LEVEL_FATAL, __VA_ARGS__)
 #else
-#    define ULOG_FATAL(...) ((void)0)
+#define ULOG_FATAL(...) ((void) 0)
 #endif
 
 // class Log {};
