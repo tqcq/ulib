@@ -22,17 +22,20 @@ Logger::Logger() {}
 Logger::~Logger() {}
 
 void
-Logger::Log(int32_t level, const char *file, const char *func, int32_t line, const char *msg)
+Logger::Log(int32_t level, const char *file, const char *func, int32_t line, const char* tag, const char *msg)
 {
     const char *level_name = Level::ToString(level);
-    std::string pattern = "[{}] {}:{}@{} msg: {}";
+    /**
+     * @brief level_name, file:line@func tag msg
+     */
+    std::string pattern = "[{:<5}] {} {}:{}@{} {}";
 
     // auto add CR
     bool need_append_line_break = !msg || *msg == '\0' || msg[strlen(msg) - 1] != '\n';
     if (need_append_line_break) {
         pattern.append(1, '\n');
     }
-    fmt::print(pattern, level_name, file + stripped_prefix_len_, line, func, msg);
+    fmt::print(pattern, level_name, tag, file + stripped_prefix_len_, line, func, msg);
 }
 
 void

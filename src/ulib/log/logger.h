@@ -16,7 +16,7 @@ public:
     Logger();
     ~Logger();
     static Logger &GetInstance();
-    void Log(int32_t level, const char *file, const char *func, int32_t line, const char *msg);
+    void Log(int32_t level, const char *file, const char *func, int32_t line, const char* tag,const char *msg);
     void SetStrippedPrefixLen(size_t len);
 
 private:

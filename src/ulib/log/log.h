@@ -10,8 +10,8 @@
 
 namespace tqcq {
 
-#define _ULOG(level, fmt_str, ...)                                                                                     \
-    tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__,                                           \
+#define _ULOG(level, tag, fmt_str, ...)                                                                                     \
+    tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__, tag,                                           \
                                     fmt::format(fmt_str, ##__VA_ARGS__).c_str())
 
 #define ULOG_SET_STRIPPED_PREFIX_LEN(len) ::tqcq::Logger::GetInstance().SetStrippedPrefixLen(len)
