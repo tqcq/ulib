@@ -25,11 +25,11 @@ Logger::Logger() {
     const char* env_level = getenv("ULIB_LOG_LEVEL");
     printf("ULIB_LOG_LEVEL: %s\n", env_level);
     if (!env_level) {
-        level_ = Level::kALL;
+        SetLogLevel(Level::kALL);
     } else {
         int level = atoi(env_level);
         level = std::max(static_cast<int>(Level::kALL), std::min(static_cast<int>(Level::kOFF), level));
-        level_ = static_cast<Level::LevelEnum>(level);
+        SetLogLevel(static_cast<Level::LevelEnum>(level));
     }
 }
 
@@ -69,6 +69,12 @@ void
 Logger::SetStrippedPrefixLen(size_t len)
 {
     stripped_prefix_len_ = len;
+}
+
+void
+Logger::SetLogLevel(Level::LevelEnum min_level)
+{
+    level_ = min_level;
 }
 
 }// namespace tqcq
