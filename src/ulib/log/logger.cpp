@@ -28,7 +28,7 @@ Logger::Log(int32_t level, const char *file, const char *func, int32_t line, con
     std::string pattern = "[{}] {}:{}@{} msg: {}";
 
     // auto add CR
-    bool need_append_line_break = !msg || msg[strlen(msg) - 1] != '\n';
+    bool need_append_line_break = !msg || *msg == '\0' || msg[strlen(msg) - 1] != '\n';
     if (need_append_line_break) {
         pattern.append(1, '\n');
     }
