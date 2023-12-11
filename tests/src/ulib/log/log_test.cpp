@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <ulib/log/log.h>
 
-TEST(ULIB_LOG, base_test)
+TEST(ULIB_LOG_TEST, base_test)
 {
     ULOG_TRACE("trace log");
     ULOG_DEBUG("debug log");
