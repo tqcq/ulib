@@ -22,17 +22,16 @@ Logger::Logger() {}
 Logger::~Logger() {}
 
 void
-Logger::Log(int32_t level, const char *file, const char *func, int32_t line, const char *fmt, ...)
+Logger::Log(int32_t level, const char *file, const char *func, int32_t line, const char *msg)
 {
     const char *level_name = Level::ToString(level);
-    char buffer[8192];
-    {
-        va_list args;
-        va_start(args, fmt);
-        vsnprintf(buffer, sizeof(buffer), fmt, args);
-        va_end(args);
+    fmt::print("[{}] {}:{}@{} msg: {}", level_name, file + stripped_prefix_len_, line, func, msg);
+
+    // auto add CR
+    if (msg) {
+        size_t len = strlen(msg);
+        if (len > 0 && msg[len - 1] != '\n') { fmt::print("\n"); }
     }
-    fmt::print("[{}] {}:{}@{} msg: {}", level_name, file + stripped_prefix_len_, line, func, buffer);
 }
 
 void

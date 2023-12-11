@@ -15,12 +15,13 @@ class Logger {
 public:
     Logger();
     ~Logger();
-    static Logger& GetInstance();
-    void Log(int32_t level, const char* file, const char* func, int32_t line, const char* fmt, ...);
+    static Logger &GetInstance();
+    void Log(int32_t level, const char *file, const char *func, int32_t line, const char *msg);
     void SetStrippedPrefixLen(size_t len);
+
 private:
-    Logger(const Logger&);
-    Logger& operator=(const Logger&);
+    Logger(const Logger &);
+    Logger &operator=(const Logger &);
 
     size_t stripped_prefix_len_;
 };

@@ -6,10 +6,14 @@
 #define ULIB_SRC_LOG_LOG_H_
 
 #include "logger.h"
+#include <fmt/format.h>
 
 namespace tqcq {
 
-#define _ULOG(level, ...)                 ::tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+#define _ULOG(level, fmt_str, ...)                                                                                     \
+    tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__,                                           \
+                                    fmt::format(fmt_str, ##__VA_ARGS__).c_str())
+
 #define ULOG_SET_STRIPPED_PREFIX_LEN(len) ::tqcq::Logger::GetInstance().SetStrippedPrefixLen(len)
 
 #if ULOG_LEVEL <= ULOG_LEVEL_TRACE
