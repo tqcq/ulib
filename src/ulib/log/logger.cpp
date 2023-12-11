@@ -28,7 +28,7 @@ Logger::Logger() {
     } else {
         char buffer[1024] =  "invalid ULIB_LOG_LEVEL=";
         for (const char* ptr = env_level; ptr && *ptr; ++ptr) {
-            if (!isnumber(*ptr)) {
+            if (!isdigit(*ptr)) {
                 strncat(buffer + strlen(buffer), env_level, 1000);
                 Log(Level::kError, "logger.cpp", __FUNCTION__, __LINE__, "ulib.log", buffer);
                 return;
