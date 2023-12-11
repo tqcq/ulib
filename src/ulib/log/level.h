@@ -18,9 +18,19 @@ namespace tqcq {
 #define ULOG_LEVEL_OFF (ULOG_LEVEL_FATAL + 1)
 #define ULOG_LEVEL_LEVEL ULOG_LEVEL_TRACE
 
+// env control
+// trace
+// debug
+// info
+// warn
+// error
+// fatal
+
 class Level {
 public:
     enum LevelEnum {
+        kALL = ULOG_LEVEL_ALL,
+        kOFF = ULOG_LEVEL_OFF,
         kTrace = ULOG_LEVEL_TRACE,
         kDebug= ULOG_LEVEL_DEBUG,
         kInfo = ULOG_LEVEL_INFO,

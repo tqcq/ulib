@@ -16,6 +16,7 @@ namespace tqcq {
 
 #define ULOG_SET_STRIPPED_PREFIX_LEN(len) ::tqcq::Logger::GetInstance().SetStrippedPrefixLen(len)
 
+
 #if ULOG_LEVEL <= ULOG_LEVEL_TRACE
 #define ULOG_TRACE(...) _ULOG(ULOG_LEVEL_TRACE, __VA_ARGS__)
 #else

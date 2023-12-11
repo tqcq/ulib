@@ -24,6 +24,7 @@ private:
     Logger &operator=(const Logger &);
 
     size_t stripped_prefix_len_;
+    Level::LevelEnum level_;
 };
 
 }// namespace tqcq

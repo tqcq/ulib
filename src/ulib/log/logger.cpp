@@ -8,7 +8,9 @@
 #include <sstream>
 #include <stdarg.h>
 #include <string.h>
+#include <stdlib.h>
 #include <sys/time.h>
+#include <algorithm>
 
 namespace tqcq {
 
@@ -19,13 +21,26 @@ Logger::GetInstance()
     return instance;
 }
 
-Logger::Logger() {}
+Logger::Logger() {
+    const char* env_level = getenv("ULIB_LOG_LEVEL");
+    printf("ULIB_LOG_LEVEL: %s\n", env_level);
+    if (!env_level) {
+        level_ = Level::kALL;
+    } else {
+        int level = atoi(env_level);
+        level = std::max(static_cast<int>(Level::kALL), std::min(static_cast<int>(Level::kOFF), level));
+        level_ = static_cast<Level::LevelEnum>(level);
+    }
+}
 
 Logger::~Logger() {}
 
 void
 Logger::Log(int32_t level, const char *file, const char *func, int32_t line, const char* tag, const char *msg)
 {
+    if (level < level_) {
+        return;
+    }
     const char *level_name = Level::ToString(level);
     /**
      * @brief time file:line@func tag level_name msg
