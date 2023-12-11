@@ -3,7 +3,8 @@
 //
 
 #include "logger.h"
-#include "fmt/format.h"
+#include <fmt/format.h>
+#include <fmt/time.h>
 #include <sstream>
 #include <stdarg.h>
 #include <string.h>
@@ -26,16 +27,16 @@ Logger::Log(int32_t level, const char *file, const char *func, int32_t line, con
 {
     const char *level_name = Level::ToString(level);
     /**
-     * @brief level_name, file:line@func tag msg
+     * @brief time file:line@func tag level_name msg
      */
-    std::string pattern = "[{:<5}] {} {}:{}@{} {}";
+    std::string pattern = "{} {}:{}@{} {} [{:<5}]: {}";
 
     // auto add CR
     bool need_append_line_break = !msg || *msg == '\0' || msg[strlen(msg) - 1] != '\n';
     if (need_append_line_break) {
         pattern.append(1, '\n');
     }
-    fmt::print(pattern, level_name, tag, file + stripped_prefix_len_, line, func, msg);
+    fmt::print(pattern, "", file + stripped_prefix_len_, line, func, tag, level_name, msg);
 }
 
 void
