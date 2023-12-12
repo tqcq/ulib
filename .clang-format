@@ -4,13 +4,12 @@ BasedOnStyle: LLVM
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: None
-AlignOperands: Align
+AlignOperands: DontAlign
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Always
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortEnumsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLambdasOnASingleLine: All
@@ -53,9 +52,6 @@ ObjCSpaceBeforeProtocolList: false
 PointerAlignment: Right
 ReflowComments: false
 SortIncludes: Never
-AlignArrayOfStructures: Right
-# AlignConsecutiveStyle: AcrossEmptyLines
-AlignConsecutiveMacros: AcrossEmptyLines
 SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false

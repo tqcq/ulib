@@ -6,8 +6,7 @@
 #define ULIB_SRC_LOG_LOGGER_H_
 
 #include "level.h"
-#include "ulib/base/types.h"
-#include <string>
+#include <string.h>
 
 namespace tqcq {
 
@@ -17,7 +16,7 @@ public:
     ~Logger();
     static Logger &GetInstance();
     void SetLogLevel(Level::LevelEnum min_level);
-    void Log(int32_t level, const char *file, const char *func, int32_t line, const char* tag,const char *msg);
+    void Log(int32_t level, const char *file, const char *func, int32_t line, const char *tag, const char *msg);
     void SetStrippedPrefixLen(size_t len);
 
 private:
