@@ -6,6 +6,7 @@
 #define ULIB_SRC_LOG_LOGGER_H_
 
 #include "level.h"
+#include "ulib/base/types.h"
 #include <string.h>
 
 namespace tqcq {
