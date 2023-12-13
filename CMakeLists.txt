@@ -12,7 +12,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if (ULIB_SHARED_LIB)
     add_library(${PROJECT_NAME} SHARED "")
 else()
-    add_library(${PROJECT_NAME} STATIC ""
+    add_library(${PROJECT_NAME} STATIC "")
+endif()
+target_sources(${PROJECT_NAME} PRIVATE
             src/ulib/concorrency/mutex.cpp
             src/ulib/concorrency/mutex.h
             src/ulib/concorrency/condition_variable.cpp
@@ -23,7 +25,6 @@ else()
             src/ulib/concorrency/internal/condition_variable_impl.h
             src/ulib/concorrency/event.cpp
             src/ulib/concorrency/event.h)
-endif()
 
 find_package(Threads REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
