@@ -2,26 +2,26 @@ name: rpcrypto-build
 on:
   push:
     paths:
-      - '.gitea/workflows/build.yaml'
-      - 'toolchains/hisiv510.toolchain.cmake'
-      - 'toolchains/himix200.toolchain.cmake'
-      - 'toolchains/mipsel-openwrt-linux-musl.toolchain.cmake'
-      - 'toolchains/mipsel-openwrt-linux.toolchain.cmake'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/build.yaml"
+      - "toolchains/hisiv510.toolchain.cmake"
+      - "toolchains/himix200.toolchain.cmake"
+      # - 'toolchains/mipsel-openwrt-linux-musl.toolchain.cmake'
+      # - 'toolchains/mipsel-openwrt-linux.toolchain.cmake'
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
   pull_request:
     paths:
-      - '.gitea/workflows/build.yaml'
-      - 'toolchains/hisiv510.toolchain.cmake'
-      - 'toolchains/himix200.toolchain.cmake'
-      - 'toolchains/mipsel-openwrt-linux-musl.toolchain.cmake'
-      - 'toolchains/mipsel-openwrt-linux.toolchain.cmake'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/build.yaml"
+      - "toolchains/hisiv510.toolchain.cmake"
+      - "toolchains/himix200.toolchain.cmake"
+      - "toolchains/mipsel-openwrt-linux-musl.toolchain.cmake"
+      - "toolchains/mipsel-openwrt-linux.toolchain.cmake"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -63,13 +63,13 @@ jobs:
         run: |
           sudo apt-get update -y 
           sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
-          ${{ env.build_command }} 
+          ${{ env.build_command }}
 
       - name: run_gtest
         if: matrix.toolchain == 'host.toolchain.cmake'
         run: |
           cd ${{ github.workspace }}
-          cmake --build build --config ${{ matrix.build_type }} --target test 
+          cmake --build build --config ${{ matrix.build_type }} --target test
 
       - name: build-host-afl
         if: matrix.toolchain == 'host-afl.toolchain.cmake'
@@ -86,7 +86,6 @@ jobs:
         uses: addnab/docker-run-action@v3
         if: matrix.toolchain != 'host.toolchain.cmake' && matrix.toolchain != 'host-afl.toolchain.cmake'
         with:
-
           image: tqcq/ubuntu:hisi
           options: --rm --volumes-from ${{ env.JOB_CONTAINER_NAME }}
           run: |
@@ -94,3 +93,4 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
             ${{ env.build_command }}
+
