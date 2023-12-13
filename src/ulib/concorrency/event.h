@@ -23,13 +23,12 @@ public:
      * @return
      */
     bool Wait(int give_up_after_ms = -1);
-    bool operator()() const;
 
 private:
     class IsEventSetChecker {
     public:
         IsEventSetChecker(const Event &);
-        bool operator()();
+        bool operator()() const;
 
     private:
         const Event &event_;

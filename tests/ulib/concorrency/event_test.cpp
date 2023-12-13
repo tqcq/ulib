@@ -10,7 +10,6 @@ class EventTest : public ::testing::Test {
 public:
     void SetUp() override
     {
-        EXPECT_FALSE(event_());
         EXPECT_FALSE(event_.Wait(100));
 
         consumer_count_ = 0;

@@ -49,16 +49,10 @@ ulib::Event::Wait(int give_up_after_ms)
     }
 }
 
-bool
-ulib::Event::operator()() const
-{
-    return event_status_;
-}
-
 ulib::Event::IsEventSetChecker::IsEventSetChecker(const ulib::Event &event) : event_(event) {}
 
 bool
-ulib::Event::IsEventSetChecker::operator()()
+ulib::Event::IsEventSetChecker::operator()() const
 {
     return event_.event_status_;
 }
