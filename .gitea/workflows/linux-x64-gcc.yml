@@ -28,7 +28,9 @@ jobs:
         with:
           submodules: true
       - name: update
-        run: sudo apt-get update
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y cmake make
 
       - name: configure
         run: |
@@ -51,4 +53,3 @@ jobs:
       - name: test-shared
         run: |
           cd build-shared && ctest --output-on-failure -j `nproc`
-

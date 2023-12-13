@@ -2,20 +2,20 @@ name: linux-mips64-gcc
 on:
   push:
     paths:
-      - '.gitea/workflows/linux-mips64-gcc.yml'
-      - 'toolchains/mips64el-linux-gnuabi64.toolchain.cmake'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/linux-mips64-gcc.yml"
+      - "toolchains/mips64el-linux-gnuabi64.toolchain.cmake"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
   pull_request:
     paths:
-      - '.gitea/workflows/linux-mips64-gcc.yml'
-      - 'toolchains/mips64el-linux-gnuabi64.toolchain.cmake'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/linux-mips64-gcc.yml"
+      - "toolchains/mips64el-linux-gnuabi64.toolchain.cmake"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
 
 concurrency:
   group: linux-mips64-gcc-${{ github.ref }}
@@ -72,8 +72,8 @@ jobs:
 
       - name: mips64el-gnuabi64-toolchain
         run: |
-          sudo apt-get update
-          sudo apt-get install g++-mips64el-linux-gnuabi64
+          sudo apt-get update -y
+          sudo apt-get install -y g++-mips64el-linux-gnuabi64
 
       - name: configure
         run: |
