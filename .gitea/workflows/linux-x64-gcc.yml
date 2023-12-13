@@ -2,18 +2,18 @@ name: linux-x64-gcc
 on:
   push:
     paths:
-      - '.gitea/workflows/linux-x64-gcc.yml'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/linux-x64-gcc.yml"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
   pull_request:
     paths:
-      - '.gitea/workflows/linux-x64-gcc.yml'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/linux-x64-gcc.yml"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
 concurrency:
   group: linux-x64-gcc-${{ github.ref }}
   cancel-in-progress: true
@@ -51,3 +51,4 @@ jobs:
       - name: test-shared
         run: |
           cd build-shared && ctest --output-on-failure -j `nproc`
+

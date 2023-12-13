@@ -8,11 +8,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(ULIB_BUILD_TESTS "Build tests" OFF)
 option(ULIB_SHARED_LIB "Build shared library" OFF)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if (ULIB_SHARED_LIB)
     add_library(${PROJECT_NAME} SHARED "")
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 else()
-    add_library(${PROJECT_NAME} STATIC "")
+    add_library(${PROJECT_NAME} STATIC ""
+            src/ulib/concorrency/mutex.cpp
+            src/ulib/concorrency/mutex.h
+            src/ulib/concorrency/condition_variable.cpp
+            src/ulib/concorrency/condition_variable.h
+            src/ulib/concorrency/internal/mutex_impl.cpp
+            src/ulib/concorrency/internal/mutex_impl.h
+            src/ulib/concorrency/internal/condition_variable_impl.cpp
+            src/ulib/concorrency/internal/condition_variable_impl.h
+            src/ulib/concorrency/event.cpp
+            src/ulib/concorrency/event.h)
 endif()
 
 find_package(Threads REQUIRED)
@@ -30,7 +40,6 @@ set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 set(FMT_TEST OFF CACHE BOOL "Build tests" FORCE)
 set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/fmt)
-
 
 target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/empty.cpp

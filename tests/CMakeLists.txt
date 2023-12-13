@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(ulib_test
         ulib/base/types_test.cpp
         ulib/log/log_test.cpp
+        ulib/concorrency/mutex_test.cpp
+        ulib/concorrency/event_test.cpp
 )
 target_link_libraries(ulib_test PRIVATE
         ulib
