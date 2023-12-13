@@ -73,7 +73,7 @@ jobs:
       - name: mips64el-gnuabi64-toolchain
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y g++-mips64el-linux-gnuabi64
+          sudo apt-get install -y cmake make g++-mips64el-linux-gnuabi64
 
       - name: configure
         run: |
