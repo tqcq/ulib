@@ -5,8 +5,8 @@ on:
       - ".gitea/workflows/build.yaml"
       - "toolchains/hisiv510.toolchain.cmake"
       - "toolchains/himix200.toolchain.cmake"
-      # - 'toolchains/mipsel-openwrt-linux-musl.toolchain.cmake'
-      # - 'toolchains/mipsel-openwrt-linux.toolchain.cmake'
+      - "toolchains/mipsel-openwrt-linux-musl.toolchain.cmake"
+      - "toolchains/mipsel-openwrt-linux.toolchain.cmake"
       - "src/**"
       - "tests/**"
       - "CMakeLists.txt"
@@ -36,8 +36,8 @@ jobs:
           # - host-afl.toolchain.cmake
           - hisiv510.toolchain.cmake
           - himix200.toolchain.cmake
-          - mipsel-openwrt-linux-musl.toolchain.cmake
-          - mipsel-openwrt-linux.toolchain.cmake
+          # - mipsel-openwrt-linux-musl.toolchain.cmake
+          # - mipsel-openwrt-linux.toolchain.cmake
     runs-on: ubuntu-20.04
     env:
       build_command: |
