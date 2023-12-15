@@ -8,6 +8,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(ULIB_BUILD_TESTS "Build tests" OFF)
 option(ULIB_SHARED_LIB "Build shared library" OFF)
 
+
+if (NOT CMAKE_BUILD_TYPE)
+    set(MY_CMAKE_BUILD_TYPE "Release")
+endif()
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if (ULIB_SHARED_LIB)
     add_library(${PROJECT_NAME} SHARED "")
