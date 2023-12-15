@@ -19,6 +19,8 @@ target_sources(${PROJECT_NAME} PRIVATE
             src/ulib/concorrency/mutex.h
             src/ulib/concorrency/condition_variable.cpp
             src/ulib/concorrency/condition_variable.h
+            src/ulib/concorrency/countdown_latch.cpp
+            src/ulib/concorrency/countdown_latch.h
             src/ulib/concorrency/internal/mutex_impl.cpp
             src/ulib/concorrency/internal/mutex_impl.h
             src/ulib/concorrency/internal/condition_variable_impl.cpp
