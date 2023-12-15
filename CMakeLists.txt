@@ -10,8 +10,11 @@ option(ULIB_SHARED_LIB "Build shared library" OFF)
 
 
 if (NOT CMAKE_BUILD_TYPE)
-    set(MY_CMAKE_BUILD_TYPE "Release")
+    set(CMAKE_BUILD_TYPE "Release")
+    # set stripped
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
 endif()
+# add -static-libgcc and -static-libstdc++ to link flags
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if (ULIB_SHARED_LIB)
