@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include <gtest/gtest.h>
 #include <ulib/concorrency/countdown_latch.h>
 #include <pthread.h>
@@ -52,4 +53,5 @@ TEST(CoundownLatch, Assert)
     // NOTE https://github.com/google/googletest/blob/main/docs/advanced.md#death-tests-and-threads
     GTEST_FLAG_SET(death_test_style, "threadsafe");
     EXPECT_DEATH(latch.CountDown(), ".*failed.*");
+    EXPECT_EXIT(latch.CountDown(), ::testing::KilledBySignal(SIGABRT), "");
 }
