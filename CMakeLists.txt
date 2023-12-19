@@ -23,6 +23,8 @@ else()
     add_library(${PROJECT_NAME} STATIC "")
 endif()
 target_sources(${PROJECT_NAME} PRIVATE
+            src/ulib/concorrency/barrier.cpp
+            src/ulib/concorrency/barrier.h
             src/ulib/concorrency/mutex.cpp
             src/ulib/concorrency/mutex.h
             src/ulib/concorrency/condition_variable.cpp
