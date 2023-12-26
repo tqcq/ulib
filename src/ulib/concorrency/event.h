@@ -1,7 +1,3 @@
-//
-// Created by Feng Zhang on 2023/12/13.
-//
-
 #ifndef ULIB_SRC_ULIB_CONCORRENCY_EVENT_H_
 #define ULIB_SRC_ULIB_CONCORRENCY_EVENT_H_
 
