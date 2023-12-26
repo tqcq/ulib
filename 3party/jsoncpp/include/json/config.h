@@ -7,6 +7,7 @@
 #define JSON_CONFIG_H_INCLUDED
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <istream>
 #include <memory>
 #include <ostream>
