@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(ULIB_BUILD_TESTS "Build tests" OFF)
 option(ULIB_SHARED_LIB "Build shared library" OFF)
-
+option(ULIB_BUILD_EXAMPLES "Build examples" OFF)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -54,13 +54,20 @@ set(FMT_TEST OFF CACHE BOOL "Build tests" FORCE)
 set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/fmt)
 
+set(JSONCPP_WITH_TESTS OFF)
+set(JSONCPP_WITH_POST_BUILD_UNITTEST OFF)
+set(JSONCPP_WITH_PKGCONFIG_SUPPORT OFF)
+set(BUILD_SHARED_LIBS OFF)
+set(BUILD_OBJECT_LIBS OFF)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/jsoncpp)
+
 target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/empty.cpp
         src/ulib/log/logger.cpp
         src/ulib/log/log.cpp
         src/ulib/log/level.cpp
 )
-target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
+target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 
@@ -73,4 +80,8 @@ if(ULIB_BUILD_TESTS)
     set(GTEST_USE_OWN_TR1_TUPLE ON)
     add_subdirectory(3party/googletest)
     add_subdirectory(tests)
+endif()
+
+if (ULIB_BUILD_EXAMPLES)
+    add_subdirectory(examples)
 endif()
