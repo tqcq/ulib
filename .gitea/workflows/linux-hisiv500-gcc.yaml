@@ -2,20 +2,22 @@ name: linux-hisiv500-gcc
 on:
   push:
     paths:
-      - '.gitea/workflows/linux-hisiv500-gcc.yaml'
-      - 'toolchains/hisiv500.toolchain.cmake'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/linux-hisiv500-gcc.yaml"
+      - "toolchains/hisiv500.toolchain.cmake"
+      - "3party/**"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
   pull_request:
     paths:
-      - '.gitea/workflows/linux-hisiv500-gcc.yaml'
-      - 'toolchains/hisiv500.toolchain.cmake'
-      - 'src/**'
-      - 'tests/**'
-      - 'CMakeLists.txt'
-      - 'cmake/**'
+      - ".gitea/workflows/linux-hisiv500-gcc.yaml"
+      - "toolchains/hisiv500.toolchain.cmake"
+      - "3party/**"
+      - "src/**"
+      - "tests/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
 
 concurrency:
   group: linux-hisiv500-gcc-${{ github.ref }}
@@ -37,7 +39,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: qemu-install
-          key:  qemu-hisiv500-install-20231206-1
+          key: qemu-hisiv500-install-20231206-1
 
       - name: checkout-qemu
         if: steps.cache-qemu.outputs.cache-hit != 'true'

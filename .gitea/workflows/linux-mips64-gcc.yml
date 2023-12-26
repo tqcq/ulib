@@ -4,6 +4,7 @@ on:
     paths:
       - ".gitea/workflows/linux-mips64-gcc.yml"
       - "toolchains/mips64el-linux-gnuabi64.toolchain.cmake"
+      - "3party/**"
       - "src/**"
       - "tests/**"
       - "CMakeLists.txt"
@@ -12,6 +13,7 @@ on:
     paths:
       - ".gitea/workflows/linux-mips64-gcc.yml"
       - "toolchains/mips64el-linux-gnuabi64.toolchain.cmake"
+      - "3party/**"
       - "src/**"
       - "tests/**"
       - "CMakeLists.txt"
