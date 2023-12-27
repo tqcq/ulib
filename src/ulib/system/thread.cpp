@@ -91,30 +91,36 @@ Thread::Thread(const ThreadFunc &func, const std::string &thread_name)
     : impl_(new Impl(func, thread_name))
 {}
 
+Thread::Thread(Thread &&other) : impl_(other.impl_) { other.impl_ = nullptr; }
+
 // Thread(ThreadFunc &&func, const std::string &thread_name = std::string());
 Thread::~Thread() { delete impl_; }
 
 void
 Thread::Start()
 {
+    ULOG_ASSERT(impl_, "impl_ is null");
     impl_->Start();
 }
 
 int
 Thread::Join()
 {
+    ULOG_ASSERT(impl_, "impl_ is null");
     return impl_->Join();
 }
 
 bool
 Thread::Started() const
 {
+    ULOG_ASSERT(impl_, "impl_ is null");
     return impl_->Started();
 }
 
 pid_t
 Thread::Tid() const
 {
+    ULOG_ASSERT(impl_, "impl_ is null");
     return impl_->Tid();
 }
 }// namespace ulib

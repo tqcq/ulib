@@ -11,6 +11,7 @@ public:
     Thread(const ThreadFunc &func,
            const std::string &thread_name = std::string());
     // Thread(ThreadFunc &&func, const std::string &thread_name = std::string());
+    Thread(Thread &&);
     ~Thread();
 
     void Start();

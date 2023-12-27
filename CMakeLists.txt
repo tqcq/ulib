@@ -41,6 +41,8 @@ target_sources(${PROJECT_NAME} PRIVATE
             src/ulib/concorrency/event.h
             src/ulib/system/thread.h
             src/ulib/system/thread.cpp
+            src/ulib/system/thread_pool.h
+            src/ulib/system/thread_pool.cpp
 )
 
 find_package(Threads REQUIRED)
