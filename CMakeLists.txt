@@ -23,6 +23,8 @@ else()
     add_library(${PROJECT_NAME} STATIC "")
 endif()
 target_sources(${PROJECT_NAME} PRIVATE
+        src/ulib/base/location.h
+        src/ulib/base/location.cpp
             src/ulib/concorrency/barrier.cpp
             src/ulib/concorrency/barrier.h
             src/ulib/concorrency/mutex.cpp
@@ -36,7 +38,10 @@ target_sources(${PROJECT_NAME} PRIVATE
             src/ulib/concorrency/internal/condition_variable_impl.cpp
             src/ulib/concorrency/internal/condition_variable_impl.h
             src/ulib/concorrency/event.cpp
-            src/ulib/concorrency/event.h)
+            src/ulib/concorrency/event.h
+            src/ulib/system/thread.h
+            src/ulib/system/thread.cpp
+)
 
 find_package(Threads REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

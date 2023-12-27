@@ -7,6 +7,7 @@ add_executable(ulib_test
         ulib/concorrency/mutex_unittest.cpp
         ulib/concorrency/event_unittest.cpp
         ulib/concorrency/countdown_latch_unittest.cpp
+        ulib/system/thread_unittest.cpp
 )
 target_link_libraries(ulib_test PRIVATE
         ulib

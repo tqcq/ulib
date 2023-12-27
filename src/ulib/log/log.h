@@ -5,17 +5,20 @@
 #ifndef ULIB_SRC_LOG_LOG_H_
 #define ULIB_SRC_LOG_LOG_H_
 
+#include "ulib/base/location.h"
 #include "logger.h"
 #include "level.h"
 #include <fmt/format.h>
 
 namespace tqcq {
 
-#define _ULOG(level, tag, fmt_str, ...)                                                                                \
-    tqcq::Logger::GetInstance().Log(level, __FILE__, __FUNCTION__, __LINE__, tag,                                      \
-                                    fmt::format(fmt_str, ##__VA_ARGS__).c_str())
+#define _ULOG(level, tag, fmt_str, ...)                                        \
+    tqcq::Logger::GetInstance().Log(                                           \
+        level, __FILE__, __FUNCTION__, __LINE__, tag,                          \
+        fmt::format(fmt_str, ##__VA_ARGS__).c_str())
 
-#define ULOG_SET_STRIPPED_PREFIX_LEN(len) ::tqcq::Logger::GetInstance().SetStrippedPrefixLen(len)
+#define ULOG_SET_STRIPPED_PREFIX_LEN(len)                                      \
+    ::tqcq::Logger::GetInstance().SetStrippedPrefixLen(len)
 
 #if ULOG_LEVEL <= ULOG_LEVEL_TRACE
 #define ULOG_TRACE(tag, ...) _ULOG(ULOG_LEVEL_TRACE, tag, __VA_ARGS__)
@@ -52,6 +55,17 @@ namespace tqcq {
 #else
 #define ULOG_FATAL(...) ((void) 0)
 #endif
+
+#define ULOG_ASSERT_WITH_TAG(expr, tag, ...)                                   \
+    do {                                                                       \
+        if (!(expr)) {                                                         \
+            _ULOG(ULOG_LEVEL_FATAL, tag, ##__VA_ARGS__);                       \
+            abort();                                                           \
+        }                                                                      \
+    } while (0)
+
+#define ULOG_ASSERT(expr, ...)                                                 \
+    ULOG_ASSERT_WITH_TAG(expr, "ulib_assert", ##__VA_ARGS__)
 
 }// namespace tqcq
 

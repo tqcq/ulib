@@ -36,7 +36,7 @@ BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeColon
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 BreakInheritanceList: BeforeColon
-ColumnLimit: 120
+ColumnLimit: 80
 CompactNamespaces: false
 ContinuationIndentWidth: 4
 EmptyLineBeforeAccessModifier: LogicalBlock
@@ -70,3 +70,4 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 TabWidth: 4
 UseTab: Never
+
