@@ -37,6 +37,7 @@ public:
     {
         Impl *impl = static_cast<Impl *>(obj);
         *impl->tid_ = GetTid();
+        pthread_setname_np(impl->thread_name_.c_str());
         impl->latch_.CountDown();
         try {
             impl->func_();
