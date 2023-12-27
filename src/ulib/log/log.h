@@ -8,6 +8,7 @@
 #include "ulib/base/location.h"
 #include "logger.h"
 #include "level.h"
+#include <stdlib.h>
 #include <fmt/format.h>
 
 namespace tqcq {
