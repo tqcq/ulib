@@ -39,8 +39,10 @@ public:
         *impl->tid_ = GetTid();
 #if __APPLE__
         pthread_setname_np(impl->thread_name_.c_str());
-#else
+#elif ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 12)))
         pthread_setname_np(impl->thread_, impl->thread_name_.c_str());
+#else
+        // TODO set thread name
 #endif
 
         impl->latch_.CountDown();
