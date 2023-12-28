@@ -1,5 +1,4 @@
 #include "thread.h"
-#include <climits>
 #include <pthread.h>
 #include "ulib/log/log.h"
 #include "ulib/concorrency/countdown_latch.h"
@@ -37,7 +36,12 @@ public:
     {
         Impl *impl = static_cast<Impl *>(obj);
         *impl->tid_ = GetTid();
+#if __APPLE__
         pthread_setname_np(impl->thread_name_.c_str());
+#else
+        pthread_setname_np(&thread_, impl->thread_name_.c_str());
+#endif
+
         impl->latch_.CountDown();
         try {
             impl->func_();

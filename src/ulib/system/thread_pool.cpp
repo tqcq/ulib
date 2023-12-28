@@ -1,4 +1,5 @@
 #include "thread_pool.h"
+#include <fmt/format.h>
 
 namespace ulib {
 ThreadPool::ThreadPool(int max_thread_num,
@@ -13,7 +14,7 @@ ThreadPool::ThreadPool(int max_thread_num,
     ULOG_ASSERT(max_thread_num_ > 0, "max_thread_num_ must be greater than 0");
     workers_.reserve(max_thread_num_);
     for (int i = 0; i < init_thread_num; ++i) {
-        AddThread(thread_pool_name_ + std::to_string(i));
+        AddThread(thread_pool_name_ + fmt::format("{}", i));
     }
 }
 
