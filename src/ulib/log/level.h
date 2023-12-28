@@ -42,6 +42,26 @@ public:
         FATAL = ULOG_LEVEL_FATAL
     };
 
+    static const char *ToShortString(int level)
+    {
+        switch (level) {
+        case kTrace:
+            return "T";
+        case kDebug:
+            return "D";
+        case kInfo:
+            return "I";
+        case kWarn:
+            return "W";
+        case kError:
+            return "E";
+        case kFatal:
+            return "F";
+        default:
+            return "UNKNOWN";
+        }
+    }
+
     static const char *ToString(int level)
     {
         switch (level) {

@@ -53,7 +53,7 @@ Logger::Log(int32_t level,
             const char *msg)
 {
     if (level < level_) { return; }
-    const char *level_name = Level::ToString(level);
+    const char *level_name = Level::ToShortString(level);
     /**
      * @brief time file:line@func tag level_name msg
      */
@@ -62,7 +62,7 @@ Logger::Log(int32_t level,
     /**
     * @brief time level_name tag file:line@func msg
       */
-    std::string pattern = "{} [{}] {} {}:{}@{}: {}";
+    std::string pattern = "{} {} {} {}:{}@{}: {}";
     std::string log_time;
     {
         std::time_t now = time(NULL);
