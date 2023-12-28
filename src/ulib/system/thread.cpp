@@ -19,7 +19,7 @@ GetTid()
 class Thread::Impl {
 public:
     Impl(const ThreadFunc &func, const std::string &thread_name)
-        : thread_(nullptr),
+        : thread_(),
           started_(false),
           joined_(false),
           thread_name_(thread_name),
