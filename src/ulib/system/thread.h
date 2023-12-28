@@ -17,6 +17,8 @@ public:
     void Start();
     int Join();
 
+    static void Sleep(uint64_t usec);
+
     bool Started() const;
     pid_t Tid() const;
     const std::string &name() const;

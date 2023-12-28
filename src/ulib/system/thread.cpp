@@ -123,4 +123,10 @@ Thread::Tid() const
     ULOG_ASSERT(impl_, "impl_ is null");
     return impl_->Tid();
 }
+
+void
+Thread::Sleep(uint64_t usec)
+{
+    usleep(usec);
+}
 }// namespace ulib

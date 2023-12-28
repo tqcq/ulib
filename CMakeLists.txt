@@ -20,7 +20,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if (ULIB_SHARED_LIB)
     add_library(${PROJECT_NAME} SHARED "")
 else()
-    add_library(${PROJECT_NAME} STATIC "")
+    add_library(${PROJECT_NAME} STATIC ""
+            src/ulib/system/timer.cpp
+            src/ulib/system/timer.h)
 endif()
 target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/base/location.h
@@ -43,6 +45,8 @@ target_sources(${PROJECT_NAME} PRIVATE
             src/ulib/system/thread.cpp
             src/ulib/system/thread_pool.h
             src/ulib/system/thread_pool.cpp
+            src/ulib/system/timer.h
+            src/ulib/system/timer.cpp
 )
 
 find_package(Threads REQUIRED)
