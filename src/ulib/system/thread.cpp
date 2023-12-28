@@ -18,7 +18,7 @@ GetTid()
 class Thread::Impl {
 public:
     Impl(const ThreadFunc &func, const std::string &thread_name)
-        : thread_(0),
+        : thread_(nullptr),
           started_(false),
           joined_(false),
           thread_name_(thread_name),
@@ -39,7 +39,7 @@ public:
 #if __APPLE__
         pthread_setname_np(impl->thread_name_.c_str());
 #else
-        pthread_setname_np(&thread_, impl->thread_name_.c_str());
+        pthread_setname_np(&impl->thread_, impl->thread_name_.c_str());
 #endif
 
         impl->latch_.CountDown();
