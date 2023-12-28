@@ -1,5 +1,4 @@
 #include "thread_pool.h"
-#include <fmt/format.h>
 
 namespace ulib {
 ThreadPool::ThreadPool(int max_thread_num,
