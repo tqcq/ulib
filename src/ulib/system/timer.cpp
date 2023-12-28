@@ -18,15 +18,23 @@ TimeNowInMicroSeconds()
     return tv.tv_sec * 1000000ULL + tv.tv_usec;
 }
 
-std::atomic_uint64_t Timer::next_timer_id_(1);
+std::atomic<uint64_t> Timer::next_timer_id_(0);
 
 Timer::Timer(uint64_t when, uint64_t interval)
-    : timer_id_(next_timer_id_.fetch_add(1)),
+    : timer_id_(NextTimerId()),
       when_(when),
       interval_(interval),
       auto_reset_(interval_ > 0),
       expire_callback_()
 {}
+
+uint64_t
+Timer::NextTimerId()
+{
+    uint64_t id = 0;
+    while (id == 0) { id = next_timer_id_.fetch_add(1); }
+    return id;
+}
 
 TimerManager::TimerManager()
     : stopped_(false),

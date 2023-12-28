@@ -16,6 +16,7 @@ using TimerId = uint64_t;
 
 class Timer {
 public:
+    const uint64_t INVALID_TIMER_ID = 0;
     using ExpireCallback = std::function<void()>;
     Timer(uint64_t when, uint64_t intarval);
     // void Start();
@@ -29,6 +30,7 @@ public:
     bool operator == (const Timer& rhs) const { return timer_id_ == rhs.timer_id_; }
 
 private:
+    static uint64_t NextTimerId();
     const TimerId timer_id_;
     // micro seconds
     uint64_t when_;
@@ -36,7 +38,7 @@ private:
     uint64_t interval_;
     bool auto_reset_;
     ExpireCallback expire_callback_;
-    static std::atomic_uint64_t next_timer_id_;
+    static std::atomic<uint64_t> next_timer_id_;
 };
 
 
