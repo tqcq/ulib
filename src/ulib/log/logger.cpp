@@ -62,7 +62,8 @@ Logger::Log(int32_t level,
     /**
     * @brief time level_name tag file:line@func msg
       */
-    std::string pattern = "{} {} {} {}:{}@{}: {}";
+    std::string pattern = std::string() + Level::GetConsoleColorPrefix(level)
+        + "{} {} {} {}:{}@{}: {}" + Level::GetConsoleColorSuffix(level);
     std::string log_time;
     {
         std::time_t now = time(NULL);
