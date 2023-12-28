@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 #include <exception>
+#include <memory>
 
 namespace ulib {
 
