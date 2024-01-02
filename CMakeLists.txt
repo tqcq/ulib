@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(ulib LANGUAGES CXX VERSION 0.1.0)
+project(ulib LANGUAGES CXX C VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -25,6 +25,7 @@ else()
             src/ulib/system/timer.h)
 endif()
 target_sources(${PROJECT_NAME} PRIVATE
+        3party/mongoose/mongoose.c
         src/ulib/base/location.h
         src/ulib/base/location.cpp
             src/ulib/concorrency/barrier.cpp
@@ -80,7 +81,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
-target_include_directories(${PROJECT_NAME} PUBLIC src)
+target_include_directories(${PROJECT_NAME} PUBLIC
+    src
+    3party/mongoose)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 
