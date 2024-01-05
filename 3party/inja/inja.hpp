@@ -27,6 +27,11 @@ SOFTWARE.
 #include <nlohmann/json.hpp>
 
 namespace inja {
+
+#if __cplusplus < 201703L
+using string_view = const std::string &;
+#endif
+
 #ifndef INJA_DATA_TYPE
 using json = nlohmann::json;
 #else
