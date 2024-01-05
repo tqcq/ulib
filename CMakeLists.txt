@@ -85,10 +85,11 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC
-    3party/nlohmann
     3party/inja
     3party/mongoose
+    3party/nlohmann
     3party/optional
+    3party/sigslot
     src
 )
 
