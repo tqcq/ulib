@@ -13,6 +13,7 @@ add_executable(ulib_test
         ulib/system/thread_pool_unittest.cpp
         ulib/system/timer_unittest.cpp
         3party/inja/inja_unittest.cpp
+        3party/optional/optional_unittest.cpp
         ulib/utils/defer_unittest.cpp
 )
 target_link_libraries(ulib_test PRIVATE

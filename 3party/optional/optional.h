@@ -2495,4 +2495,42 @@ constexpr tl::nullopt_t nullopt{tl::nullopt};
 
 }// namespace std
 
+namespace ulib {
+template<typename T>
+using hash = std::hash<tl::optional<T>>;
+
+// if <= C++14
+#if __cplusplus < 201703L
+template<typename T>
+using optional = tl::optional<T>;
+
+template<typename T>
+using nullopt_t = tl::nullopt_t;
+
+// make_optional
+template<typename T>
+constexpr tl::optional<tl::detail::decay_t<T>>
+make_optional(T &&v)
+{
+    return tl::make_optional(std::forward<T>(v));
+}
+
+template<typename T, typename... Args>
+constexpr tl::optional<T>
+make_optional(Args &&...args)
+{
+    return tl::make_optional<T>(std::forward<Args>(args)...);
+}
+
+template<typename T, typename U, typename... Args>
+constexpr tl::optional<T>
+make_optional(std::initializer_list<U> il, Args &&...args)
+{
+    return tl::make_optional<T>(il, std::forward<Args>(args)...);
+}
+
+constexpr tl::nullopt_t nullopt{tl::nullopt};
+#endif
+
+}// namespace ulib
 #endif
