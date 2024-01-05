@@ -18,6 +18,7 @@
 // SPDX-License-Identifier: GPL-2.0-only or commercial
 
 // fix miss CLOCK_REALTIME
+#include <time.h>
 #define _POSIX_C_SOURCE 200809L
 #include "mongoose.h"
 #include <time.h>
@@ -13549,7 +13550,10 @@ uint64_t mg_millis(void) {
 #elif MG_ARCH == MG_ARCH_UNIX && defined(__APPLE__)
   // Apple CLOCK_MONOTONIC_RAW is equivalent to CLOCK_BOOTTIME on linux
   // Apple CLOCK_UPTIME_RAW is equivalent to CLOCK_MONOTONIC_RAW on linux
-  return clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000000;
+  // return clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000000;
+  struct timespec tp;
+    clock_gettime(CLOCK_UPTIME_RAW, &tp);
+    return tp.tv_sec * 1000 + tp.tv_nsec / 1000000;
 #elif MG_ARCH == MG_ARCH_UNIX
   struct timespec ts = {0, 0};
   // See #1615 - prefer monotonic clock

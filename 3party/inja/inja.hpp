@@ -26,11 +26,13 @@ SOFTWARE.
 #define INCLUDE_INJA_INJA_HPP_
 #include <nlohmann/json.hpp>
 
-namespace inja {
-
-#if __cplusplus < 201703L
+namespace std {
+#if __cplusplus <= 201103L
 using string_view = const std::string &;
 #endif
+}// namespace std
+
+namespace inja {
 
 #ifndef INJA_DATA_TYPE
 using json = nlohmann::json;
