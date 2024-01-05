@@ -13551,7 +13551,8 @@ uint64_t mg_millis(void) {
   // Apple CLOCK_UPTIME_RAW is equivalent to CLOCK_MONOTONIC_RAW on linux
   // return clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000000;
   struct timespec tp;
-    clock_gettime(CLOCK_UPTIME_RAW, &tp);
+    // clock_gettime(CLOCK_UPTIME_RAW, &tp);
+    clock_gettime(8, &tp);
     return tp.tv_sec * 1000 + tp.tv_nsec / 1000000;
 #elif MG_ARCH == MG_ARCH_UNIX
   struct timespec ts = {0, 0};

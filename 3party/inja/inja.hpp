@@ -26,12 +26,6 @@ SOFTWARE.
 #define INCLUDE_INJA_INJA_HPP_
 #include <nlohmann/json.hpp>
 
-namespace std {
-#if __cplusplus <= 201103L
-using string_view = const std::string &;
-#endif
-}// namespace std
-
 namespace inja {
 
 #ifndef INJA_DATA_TYPE
@@ -68,7 +62,7 @@ using json = INJA_DATA_TYPE;
 #include <memory>
 #include <sstream>
 #include <string>
-#include <string_view>
+// #include <string>
 
 // #include "config.hpp"
 #ifndef INCLUDE_INJA_CONFIG_HPP_
@@ -91,14 +85,14 @@ using json = INJA_DATA_TYPE;
 #define INCLUDE_INJA_NODE_HPP_
 
 #include <string>
-#include <string_view>
+// #include <string>
 #include <utility>
 
 // #include "function_storage.hpp"
 #ifndef INCLUDE_INJA_FUNCTION_STORAGE_HPP_
 #define INCLUDE_INJA_FUNCTION_STORAGE_HPP_
 
-#include <string_view>
+// #include <string>
 #include <vector>
 
 namespace inja {
@@ -211,14 +205,14 @@ private:
     };
 
 public:
-    void add_builtin(std::string_view name, int num_args, Operation op)
+    void add_builtin(std::string name, int num_args, Operation op)
     {
         function_storage.emplace(
             std::make_pair(static_cast<std::string>(name), num_args),
             FunctionData{op});
     }
 
-    void add_callback(std::string_view name,
+    void add_callback(std::string name,
                       int num_args,
                       const CallbackFunction &callback)
     {
@@ -227,7 +221,7 @@ public:
             FunctionData{Operation::Callback, callback});
     }
 
-    FunctionData find_function(std::string_view name, int num_args) const
+    FunctionData find_function(std::string name, int num_args) const
     {
         auto it = function_storage.find(
             std::make_pair(static_cast<std::string>(name), num_args));
@@ -256,7 +250,7 @@ public:
 #include <algorithm>
 #include <fstream>
 #include <string>
-#include <string_view>
+#include <string>
 #include <utility>
 
 // #include "exceptions.hpp"
@@ -332,44 +326,42 @@ struct DataError : public InjaError {
 
 namespace inja {
 
-namespace string_view {
-inline std::string_view
-slice(std::string_view view, size_t start, size_t end)
+namespace string {
+inline std::string
+slice(std::string view, size_t start, size_t end)
 {
     start = std::min(start, view.size());
     end = std::min(std::max(start, end), view.size());
     return view.substr(start, end - start);
 }
 
-inline std::pair<std::string_view, std::string_view>
-split(std::string_view view, char Separator)
+inline std::pair<std::string, std::string>
+split(std::string view, char Separator)
 {
     size_t idx = view.find(Separator);
-    if (idx == std::string_view::npos) {
-        return std::make_pair(view, std::string_view());
+    if (idx == std::string::npos) {
+        return std::make_pair(view, std::string());
     }
     return std::make_pair(slice(view, 0, idx),
-                          slice(view, idx + 1, std::string_view::npos));
+                          slice(view, idx + 1, std::string::npos));
 }
 
 inline bool
-starts_with(std::string_view view, std::string_view prefix)
+starts_with(std::string view, std::string prefix)
 {
     return (view.size() >= prefix.size()
             && view.compare(0, prefix.size(), prefix) == 0);
 }
-}// namespace string_view
+}// namespace string
 
 inline SourceLocation
-get_source_location(std::string_view content, size_t pos)
+get_source_location(std::string content, size_t pos)
 {
     // Get line and offset position (starts at 1:1)
-    auto sliced = string_view::slice(content, 0, pos);
+    auto sliced = string::slice(content, 0, pos);
     std::size_t last_newline = sliced.rfind("\n");
 
-    if (last_newline == std::string_view::npos) {
-        return {1, sliced.length() + 1};
-    }
+    if (last_newline == std::string::npos) { return {1, sliced.length() + 1}; }
 
     // Count newlines
     size_t count_lines = 0;
@@ -484,7 +476,7 @@ class LiteralNode : public ExpressionNode {
 public:
     const json value;
 
-    explicit LiteralNode(std::string_view data_text, size_t pos)
+    explicit LiteralNode(std::string data_text, size_t pos)
         : ExpressionNode(pos),
           value(json::parse(data_text))
     {}
@@ -497,19 +489,19 @@ public:
     const std::string name;
     const json::json_pointer ptr;
 
-    static std::string convert_dot_to_ptr(std::string_view ptr_name)
+    static std::string convert_dot_to_ptr(std::string ptr_name)
     {
         std::string result;
         do {
-            std::string_view part;
-            std::tie(part, ptr_name) = string_view::split(ptr_name, '.');
+            std::string part;
+            std::tie(part, ptr_name) = string::split(ptr_name, '.');
             result.push_back('/');
             result.append(part.begin(), part.end());
         } while (!ptr_name.empty());
         return result;
     }
 
-    explicit DataNode(std::string_view ptr_name, size_t pos)
+    explicit DataNode(std::string ptr_name, size_t pos)
         : ExpressionNode(pos),
           name(ptr_name),
           ptr(json::json_pointer(convert_dot_to_ptr(ptr_name)))
@@ -537,7 +529,7 @@ public:
     std::vector<std::shared_ptr<ExpressionNode>> arguments;
     CallbackFunction callback;
 
-    explicit FunctionNode(std::string_view name, size_t pos)
+    explicit FunctionNode(std::string name, size_t pos)
         : ExpressionNode(pos),
           precedence(8),
           associativity(Associativity::Left),
@@ -1008,7 +1000,7 @@ struct RenderConfig {
 #define INCLUDE_INJA_TOKEN_HPP_
 
 #include <string>
-#include <string_view>
+#include <string>
 
 namespace inja {
 
@@ -1055,14 +1047,11 @@ struct Token {
     };
 
     Kind kind{Kind::Unknown};
-    std::string_view text;
+    std::string text;
 
-    explicit constexpr Token() = default;
+    explicit Token() = default;
 
-    explicit constexpr Token(Kind kind, std::string_view text)
-        : kind(kind),
-          text(text)
-    {}
+    explicit Token(Kind kind, std::string text) : kind(kind), text(text) {}
 
     std::string describe() const
     {
@@ -1116,13 +1105,13 @@ class Lexer {
 
     State state;
     MinusState minus_state;
-    std::string_view m_in;
+    std::string m_in;
     size_t tok_start;
     size_t pos;
 
-    Token scan_body(std::string_view close,
+    Token scan_body(std::string close,
                     Token::Kind closeKind,
-                    std::string_view close_trim = std::string_view(),
+                    std::string close_trim = std::string(),
                     bool trim = false)
     {
     again:
@@ -1136,8 +1125,7 @@ class Lexer {
 
         // check for close
         if (!close_trim.empty()
-            && inja::string_view::starts_with(m_in.substr(tok_start),
-                                              close_trim)) {
+            && inja::string::starts_with(m_in.substr(tok_start), close_trim)) {
             state = State::Text;
             pos = tok_start + close_trim.size();
             const Token tok = make_token(closeKind);
@@ -1145,7 +1133,7 @@ class Lexer {
             return tok;
         }
 
-        if (inja::string_view::starts_with(m_in.substr(tok_start), close)) {
+        if (inja::string::starts_with(m_in.substr(tok_start), close)) {
             state = State::Text;
             pos = tok_start + close.size();
             const Token tok = make_token(closeKind);
@@ -1308,7 +1296,7 @@ class Lexer {
 
     Token make_token(Token::Kind kind) const
     {
-        return Token(kind, string_view::slice(m_in, tok_start, pos));
+        return Token(kind, string::slice(m_in, tok_start, pos));
     }
 
     void skip_whitespaces_and_newlines()
@@ -1342,14 +1330,14 @@ class Lexer {
         }
     }
 
-    static std::string_view
-    clear_final_line_if_whitespace(std::string_view text)
+    static std::string clear_final_line_if_whitespace(std::string text)
     {
-        std::string_view result = text;
+        std::string result = text;
         while (!result.empty()) {
             const char ch = result.back();
             if (ch == ' ' || ch == '\t') {
-                result.remove_suffix(1);
+                // result.remove_suffix(1);
+                result.pop_back();
             } else if (ch == '\n' || ch == '\r') {
                 break;
             } else {
@@ -1371,7 +1359,7 @@ public:
         return get_source_location(m_in, tok_start);
     }
 
-    void start(std::string_view input)
+    void start(std::string input)
     {
         m_in = input;
         tok_start = 0;
@@ -1380,7 +1368,7 @@ public:
         minus_state = MinusState::Number;
 
         // Consume byte order mark (BOM) for UTF-8
-        if (inja::string_view::starts_with(m_in, "\xEF\xBB\xBF")) {
+        if (inja::string::starts_with(m_in, "\xEF\xBB\xBF")) {
             m_in = m_in.substr(3);
         }
     }
@@ -1398,7 +1386,7 @@ public:
             // fast-scan to first open character
             const size_t open_start =
                 m_in.substr(pos).find_first_of(config.open_chars);
-            if (open_start == std::string_view::npos) {
+            if (open_start == std::string::npos) {
                 // didn't find open, return remaining text as text token
                 pos = m_in.size();
                 return make_token(Token::Kind::Text);
@@ -1406,23 +1394,22 @@ public:
             pos += open_start;
 
             // try to match one of the opening sequences, and get the close
-            std::string_view open_str = m_in.substr(pos);
+            std::string open_str = m_in.substr(pos);
             bool must_lstrip = false;
-            if (inja::string_view::starts_with(open_str,
-                                               config.expression_open)) {
-                if (inja::string_view::starts_with(
+            if (inja::string::starts_with(open_str, config.expression_open)) {
+                if (inja::string::starts_with(
                         open_str, config.expression_open_force_lstrip)) {
                     state = State::ExpressionStartForceLstrip;
                     must_lstrip = true;
                 } else {
                     state = State::ExpressionStart;
                 }
-            } else if (inja::string_view::starts_with(open_str,
-                                                      config.statement_open)) {
-                if (inja::string_view::starts_with(
+            } else if (inja::string::starts_with(open_str,
+                                                 config.statement_open)) {
+                if (inja::string::starts_with(
                         open_str, config.statement_open_no_lstrip)) {
                     state = State::StatementStartNoLstrip;
-                } else if (inja::string_view::starts_with(
+                } else if (inja::string::starts_with(
                                open_str, config.statement_open_force_lstrip)) {
                     state = State::StatementStartForceLstrip;
                     must_lstrip = true;
@@ -1430,9 +1417,9 @@ public:
                     state = State::StatementStart;
                     must_lstrip = config.lstrip_blocks;
                 }
-            } else if (inja::string_view::starts_with(open_str,
-                                                      config.comment_open)) {
-                if (inja::string_view::starts_with(
+            } else if (inja::string::starts_with(open_str,
+                                                 config.comment_open)) {
+                if (inja::string::starts_with(
                         open_str, config.comment_open_force_lstrip)) {
                     state = State::CommentStartForceLstrip;
                     must_lstrip = true;
@@ -1441,15 +1428,15 @@ public:
                     must_lstrip = config.lstrip_blocks;
                 }
             } else if ((pos == 0 || m_in[pos - 1] == '\n')
-                       && inja::string_view::starts_with(
-                           open_str, config.line_statement)) {
+                       && inja::string::starts_with(open_str,
+                                                    config.line_statement)) {
                 state = State::LineStart;
             } else {
                 pos += 1;// wasn't actually an opening sequence
                 goto again;
             }
 
-            std::string_view text = string_view::slice(m_in, tok_start, pos);
+            std::string text = string::slice(m_in, tok_start, pos);
             if (must_lstrip) { text = clear_final_line_if_whitespace(text); }
 
             if (text.empty()) {
@@ -1510,13 +1497,13 @@ public:
         case State::CommentBody: {
             // fast-scan to comment close
             const size_t end = m_in.substr(pos).find(config.comment_close);
-            if (end == std::string_view::npos) {
+            if (end == std::string::npos) {
                 pos = m_in.size();
                 return make_token(Token::Kind::Eof);
             }
 
             // Check for trim pattern
-            const bool must_rstrip = inja::string_view::starts_with(
+            const bool must_rstrip = inja::string::starts_with(
                 m_in.substr(pos + end - 1), config.comment_close_force_rstrip);
 
             // return the entire comment in the close token
@@ -1565,7 +1552,7 @@ class Parser {
     Token tok, peek_tok;
     bool have_peek_tok{false};
 
-    std::string_view literal_start;
+    std::string literal_start;
 
     BlockNode *current_block{nullptr};
     ExpressionListNode *current_expression_list{nullptr};
@@ -1599,9 +1586,9 @@ class Parser {
 
     inline void add_literal(Arguments &arguments, const char *content_ptr)
     {
-        std::string_view data_text(literal_start.data(),
-                                   tok.text.data() - literal_start.data()
-                                       + tok.text.size());
+        std::string data_text(literal_start.data(),
+                              tok.text.data() - literal_start.data()
+                                  + tok.text.size());
         arguments.emplace_back(std::make_shared<LiteralNode>(
             data_text, data_text.data() - content_ptr));
     }
@@ -1624,8 +1611,7 @@ class Parser {
         arguments.emplace_back(function);
     }
 
-    void add_to_template_storage(std::string_view path,
-                                 std::string &template_name)
+    void add_to_template_storage(std::string path, std::string &template_name)
     {
         if (template_storage.find(template_name) != template_storage.end()) {
             return;
@@ -1934,8 +1920,7 @@ class Parser {
         return expr;
     }
 
-    bool
-    parse_statement(Template &tmpl, Token::Kind closing, std::string_view path)
+    bool parse_statement(Template &tmpl, Token::Kind closing, std::string path)
     {
         if (tok.kind != Token::Kind::Id) { return false; }
 
@@ -2134,7 +2119,7 @@ class Parser {
         return true;
     }
 
-    void parse_into(Template &tmpl, std::string_view path)
+    void parse_into(Template &tmpl, std::string path)
     {
         lexer.start(tmpl.content);
         current_block = &tmpl.root;
@@ -2218,17 +2203,16 @@ public:
           function_storage(function_storage)
     {}
 
-    Template parse(std::string_view input, std::string_view path)
+    Template parse(std::string input, std::string path)
     {
         auto result = Template(static_cast<std::string>(input));
         parse_into(result, path);
         return result;
     }
 
-    void parse_into_template(Template &tmpl, std::string_view filename)
+    void parse_into_template(Template &tmpl, std::string filename)
     {
-        std::string_view path =
-            filename.substr(0, filename.find_last_of("/\\") + 1);
+        std::string path = filename.substr(0, filename.find_last_of("/\\") + 1);
 
         // StringRef path = sys::path::parent_path(filename);
         auto sub_parser = Parser(config, lexer.get_config(), template_storage,
@@ -3091,7 +3075,7 @@ public:
         render_config.throw_at_missing_includes = will_throw;
     }
 
-    Template parse(std::string_view input)
+    Template parse(std::string input)
     {
         Parser parser(parser_config, lexer_config, template_storage,
                       function_storage);
@@ -3114,7 +3098,7 @@ public:
         return parse_template(filename);
     }
 
-    std::string render(std::string_view input, const json &data)
+    std::string render(std::string input, const json &data)
     {
         return render(parse(input), data);
     }
@@ -3265,7 +3249,7 @@ public:
 @brief render with default settings to a string
 */
 inline std::string
-render(std::string_view input, const json &data)
+render(std::string input, const json &data)
 {
     return Environment().render(input, data);
 }
@@ -3274,7 +3258,7 @@ render(std::string_view input, const json &data)
 @brief render with default settings to the given output stream
 */
 inline void
-render_to(std::ostream &os, std::string_view input, const json &data)
+render_to(std::ostream &os, std::string input, const json &data)
 {
     Environment env;
     env.render_to(os, env.parse(input), data);
