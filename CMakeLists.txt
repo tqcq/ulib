@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(ulib LANGUAGES CXX VERSION 0.1.0)
-set(CMAKE_CXX_STANDARD 98)
+project(ulib LANGUAGES CXX C VERSION 0.1.0)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -9,7 +12,7 @@ option(ULIB_BUILD_TESTS "Build tests" OFF)
 option(ULIB_SHARED_LIB "Build shared library" OFF)
 option(ULIB_BUILD_EXAMPLES "Build examples" OFF)
 
-if (NOT CMAKE_BUILD_TYPE)
+if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
     # set stripped
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
@@ -17,7 +20,7 @@ endif()
 # add -static-libgcc and -static-libstdc++ to link flags
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-if (ULIB_SHARED_LIB)
+if(ULIB_SHARED_LIB)
     add_library(${PROJECT_NAME} SHARED "")
 else()
     add_library(${PROJECT_NAME} STATIC ""
@@ -25,6 +28,7 @@ else()
             src/ulib/system/timer.h)
 endif()
 target_sources(${PROJECT_NAME} PRIVATE
+        3party/mongoose/mongoose.c
         src/ulib/base/location.h
         src/ulib/base/location.cpp
             src/ulib/concorrency/barrier.cpp
@@ -53,12 +57,12 @@ find_package(Threads REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 ## CMP0063
-if (POLICY CMP0063)
+if(POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
-endif ()
-if (POLICY CMP0048)
+endif()
+if(POLICY CMP0048)
     cmake_policy(SET CMP0048 NEW)
-endif ()
+endif()
 
 set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 set(FMT_TEST OFF CACHE BOOL "Build tests" FORCE)
@@ -83,6 +87,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC
     3party/nlohmann
     3party/inja
+    3party/mongoose
     src
 )
 
@@ -97,6 +102,6 @@ if(ULIB_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
 
-if (ULIB_BUILD_EXAMPLES)
+if(ULIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()

@@ -42,6 +42,48 @@ public:
         FATAL = ULOG_LEVEL_FATAL
     };
 
+    static const char *GetConsoleColorPrefix(int level)
+    {
+        switch (level) {
+        case kTrace:
+            return "\033[0;37m";
+        case kDebug:
+            return "\033[0;36m";
+        case kInfo:
+            return "\033[0;32m";
+        case kWarn:
+            return "\033[0;33m";
+        case kError:
+            return "\033[0;31m";
+        case kFatal:
+            return "\033[0;31m";
+        default:
+            return "\033[0m";
+        }
+    }
+
+    static const char *GetConsoleColorSuffix(int level) { return "\033[0m"; }
+
+    static const char *ToShortString(int level)
+    {
+        switch (level) {
+        case kTrace:
+            return "T";
+        case kDebug:
+            return "D";
+        case kInfo:
+            return "I";
+        case kWarn:
+            return "W";
+        case kError:
+            return "E";
+        case kFatal:
+            return "F";
+        default:
+            return "UNKNOWN";
+        }
+    }
+
     static const char *ToString(int level)
     {
         switch (level) {

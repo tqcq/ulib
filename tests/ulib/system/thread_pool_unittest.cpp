@@ -4,7 +4,10 @@
 
 class ThreadPoolTest : public ::testing::Test {
 protected:
-    void SetUp() override { thread_pool_ = std::make_unique<ulib::ThreadPool>(10); }
+    void SetUp() override
+    {
+        thread_pool_ = std::make_unique<ulib::ThreadPool>(10);
+    }
 
     std::unique_ptr<ulib::ThreadPool> thread_pool_;
 };
@@ -31,4 +34,16 @@ TEST_F(ThreadPoolTest, MultiTask)
     }
 
     for (auto &future : futures) { ASSERT_EQ(future.get(), 3); }
+}
+
+TEST_F(ThreadPoolTest, NoArgs)
+{
+    std::vector<std::future<int>> futures;
+    for (int i = 0; i < 1000; ++i) {
+        futures.emplace_back(thread_pool_->Submit([]() {
+            ulib::Thread::Sleep(1000);
+            return 1;
+        }));
+    }
+    for (auto &future : futures) { future.get(); }
 }

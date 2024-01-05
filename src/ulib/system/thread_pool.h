@@ -2,6 +2,7 @@
 #define ULIB_SRC_ULIB_SYSTEM_THREAD_POOL_H_
 
 #include "thread.h"
+#include <fmt/format.h>
 #include "ulib/log/log.h"
 #include "ulib/concorrency/condition_variable.h"
 #include "ulib/concorrency/mutex.h"
@@ -39,7 +40,8 @@ public:
             tasks_.emplace([task]() { (*task)(); });
             if (tasks_.size() > idle_thread_num_
                 && workers_.size() < max_thread_num_) {
-                AddThread(thread_pool_name_ + std::to_string(workers_.size()));
+                AddThread(thread_pool_name_
+                          + fmt::format("{}", workers_.size()));
             }
             if (tasks_.size() > 1) {
                 tasks_cond_.NotifyAll();
