@@ -88,7 +88,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     3party/inja
     3party/mongoose
     3party/nlohmann
-    3party/optional
+    3party/nonstd
     3party/sigslot
     src
 )
