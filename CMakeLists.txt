@@ -83,7 +83,7 @@ target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/log/log.cpp
         src/ulib/log/level.cpp
 )
-target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static)
+target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static sqlpp11::sqlpp11)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC
     3party/inja

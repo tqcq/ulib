@@ -14,6 +14,7 @@ add_executable(ulib_test
         ulib/system/timer_unittest.cpp
         3party/inja/inja_unittest.cpp
         3party/optional/optional_unittest.cpp
+        3party/sqlpp11/sqlpp11_unittest.cpp
         ulib/utils/defer_unittest.cpp
 )
 target_link_libraries(ulib_test PRIVATE
