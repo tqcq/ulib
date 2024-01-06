@@ -2,7 +2,3 @@
 	path = 3party/googletest
 	url = https://code.uocat.com/3party/googletest
 	branch = release-1.7.0
-[submodule "3party/sqlpp11"]
-	path = 3party/sqlpp11
-    url = https://code.uocat.com/3party/sqlpp11
-	branch = 0.64
