@@ -93,5 +93,5 @@ jobs:
           run: |
             cd ${{ github.workspace }}
             sudo apt-get update
-            sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
+            sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++ git
             ${{ env.build_command }}

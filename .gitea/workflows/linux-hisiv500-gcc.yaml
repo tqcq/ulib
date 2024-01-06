@@ -79,7 +79,7 @@ jobs:
           run: |
             cd ${{ github.workspace }}
             sudo apt-get update
-            sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++
+            sudo apt-get install -y libarchive-dev libssl-dev autoconf libtool pkg-config cmake make gcc g++ git
             cmake . -Bbuild -DCMAKE_TOOLCHAIN_FILE=toolchains/hisiv500.toolchain.cmake -DULIB_BUILD_TESTS=OFF -DCMAKE_CROSSCOMPILING_EMULATOR="qemu-arm;-L;/opt/hisi-linux/x86-arm/arm-hisiv500-linux/"
             cmake --build build --target all -- -j `nproc`
 

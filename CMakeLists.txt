@@ -68,6 +68,7 @@ set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 set(FMT_TEST OFF CACHE BOOL "Build tests" FORCE)
 set(FMT_USE_CPP11 OFF CACHE BOOL "Use C++11" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/fmt)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3party/sqlpp11)
 
 set(JSONCPP_WITH_TESTS OFF)
 set(JSONCPP_WITH_POST_BUILD_UNITTEST OFF)
@@ -82,7 +83,7 @@ target_sources(${PROJECT_NAME} PRIVATE
         src/ulib/log/log.cpp
         src/ulib/log/level.cpp
 )
-target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static)
+target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt jsoncpp_static sqlpp11::sqlpp11)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(${PROJECT_NAME} PUBLIC
     3party/inja
