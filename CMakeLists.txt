@@ -91,6 +91,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     3party/nlohmann
     3party/nonstd
     3party/sigslot
+    3party/rxcpp/Rx/v2/src
+    3party/rxcpp/Ix/CPP/src
     src
 )
 
