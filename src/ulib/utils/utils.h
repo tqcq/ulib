@@ -3,7 +3,6 @@
 
 #include <functional>
 #include <string_view.hpp>
-#include <type_traits>
 #include <vector>
 
 namespace ulib {
@@ -21,7 +20,11 @@ Clamp(const T &value, const T &low, const T &high)
     return Clamp(value, low, high, std::less<T>{});
 }
 
-std::string StrJoin(std::vector<nonstd::string_view> &vec,
+std::string StrJoin(const std::vector<nonstd::string_view> &vec,
+                    nonstd::string_view delimiter = ",",
+                    bool ignore_empty_str = true);
+
+std::string StrJoin(const std::vector<std::string> &vec,
                     nonstd::string_view delimiter = ",",
                     bool ignore_empty_str = true);
 

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <ulib/utils/utils.h>
+#include <vector>
 
 TEST(Utils, Clamp)
 {
@@ -31,4 +32,20 @@ TEST(Utils, StrJoin)
     EXPECT_EQ(ulib::StrJoin(vec, ","), "b,c");
     EXPECT_EQ(ulib::StrJoin(vec, ",", false), ",b,c");
     EXPECT_EQ(ulib::StrJoin(vec, ",", true), "b,c");
+}
+
+TEST(Utils, StrJoin_vector_string)
+{
+    std::vector<std::string> vec{"a", "b", "c"};
+    EXPECT_EQ(ulib::StrJoin(vec, ","), "a,b,c");
+    const std::vector<std::string> &const_vec = vec;
+    EXPECT_EQ(ulib::StrJoin(const_vec, ","), "a,b,c");
+}
+
+TEST(Utils, StrJoin_vector_nonstd_string_view)
+{
+    std::vector<nonstd::string_view> vec{"a", "b", "c"};
+    EXPECT_EQ(ulib::StrJoin(vec, ","), "a,b,c");
+    const std::vector<nonstd::string_view> &const_vec = vec;
+    EXPECT_EQ(ulib::StrJoin(const_vec, ","), "a,b,c");
 }
