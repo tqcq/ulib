@@ -18,7 +18,7 @@ StrJoin(std::vector<nonstd::string_view> &vec,
     if (iter == vec.cend()) { return ""; }
     std::stringstream ss;
     ss << *iter;
-    for (++iter; iter != iter + 1; ++iter) {
+    for (++iter; iter != vec.cend(); ++iter) {
         if (ignore_empty_str && iter->empty()) { continue; }
         ss << delimiter << *iter;
     }
