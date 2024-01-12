@@ -32,6 +32,7 @@ endif()
 target_sources(
   ${PROJECT_NAME}
   PRIVATE 3party/mongoose/mongoose.c
+          src/ulib/utils/utils.cpp
           src/ulib/base/location.h
           src/ulib/base/location.cpp
           src/ulib/status.h

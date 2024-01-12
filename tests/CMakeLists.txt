@@ -17,6 +17,7 @@ add_executable(
   3party/optional/optional_unittest.cpp
   3party/sqlpp11/sqlpp11_unittest.cpp
   ulib/utils/defer_unittest.cpp
+  ulib/utils/utils_unittest.cpp
   ulib/status_or_unittest.cpp)
 target_link_libraries(ulib_test PRIVATE ulib gtest gtest_main)
 
