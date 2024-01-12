@@ -3,7 +3,7 @@
 
 namespace ulib {
 std::string
-StrJoin(std::vector<nonstd::string_view> &vec,
+StrJoin(const std::vector<nonstd::string_view> &vec,
         nonstd::string_view delimiter,
         bool ignore_empty_str)
 {
@@ -24,6 +24,15 @@ StrJoin(std::vector<nonstd::string_view> &vec,
     }
 
     return std::move(ss.str());
+}
+
+std::string
+StrJoin(const std::vector<std::string> &vec,
+        nonstd::string_view delimiter,
+        bool ignore_empty_str)
+{
+    return StrJoin(std::vector<nonstd::string_view>{vec.cbegin(), vec.cend()},
+                   delimiter, ignore_empty_str);
 }
 
 }// namespace ulib
