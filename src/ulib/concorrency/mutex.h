@@ -5,10 +5,13 @@ namespace ulib {
 
 namespace detail {
 class MutexImpl;
-}
+}// namespace detail
+
+class MutexGuard;
 
 class Mutex {
 public:
+    using ScopedLock = MutexGuard;
     Mutex();
     ~Mutex();
     void Lock();
