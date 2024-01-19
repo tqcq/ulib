@@ -2500,7 +2500,7 @@ template<typename T>
 using hash = std::hash<tl::optional<T>>;
 
 // if <= C++14
-#if __cplusplus < 201703L
+// #if __cplusplus < 201703L
 template<typename T>
 using optional = tl::optional<T>;
 
@@ -2530,7 +2530,7 @@ make_optional(std::initializer_list<U> il, Args &&...args)
 }
 
 constexpr tl::nullopt_t nullopt{tl::nullopt};
-#endif
+// #endif
 
 }// namespace ulib
 #endif

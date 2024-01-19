@@ -16,17 +16,17 @@ option(ULIB_SHARED_LIB "Build shared library" OFF)
 option(ULIB_BUILD_EXAMPLES "Build examples" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release")
-    # set stripped
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+  set(CMAKE_BUILD_TYPE "Release")
+  # set stripped
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
 endif()
 # add -static-libgcc and -static-libstdc++ to link flags
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if(ULIB_SHARED_LIB)
-    add_library(${PROJECT_NAME} SHARED "")
+  add_library(${PROJECT_NAME} SHARED "")
 else()
-    add_library(${PROJECT_NAME} STATIC "" src/ulib/system/timer.cpp
+  add_library(${PROJECT_NAME} STATIC "" src/ulib/system/timer.cpp
                                      src/ulib/system/timer.h)
 endif()
 target_sources(
@@ -63,10 +63,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # CMP0063
 if(POLICY CMP0063)
-    cmake_policy(SET CMP0063 NEW)
+  cmake_policy(SET CMP0063 NEW)
 endif()
 if(POLICY CMP0048)
-    cmake_policy(SET CMP0048 NEW)
+  cmake_policy(SET CMP0048 NEW)
 endif()
 
 set(FMT_USE_CPP11
@@ -97,6 +97,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ULIB_LIBRARY_IMPL)
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC 3party/bnflite
+         3party/eventbus/include
          3party/inja
          3party/mongoose
          3party/nlohmann
@@ -109,14 +110,14 @@ target_include_directories(
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 
 if(ULIB_BUILD_TESTS)
-    enable_testing()
-    set(GTEST_LANG_CXX11 OFF)
-    set(GTEST_HAS_TR1_TUPLE OFF)
-    set(GTEST_USE_OWN_TR1_TUPLE ON)
-    add_subdirectory(3party/googletest)
-    add_subdirectory(tests)
+  enable_testing()
+  set(GTEST_LANG_CXX11 OFF)
+  set(GTEST_HAS_TR1_TUPLE OFF)
+  set(GTEST_USE_OWN_TR1_TUPLE ON)
+  add_subdirectory(3party/googletest)
+  add_subdirectory(tests)
 endif()
 
 if(ULIB_BUILD_EXAMPLES)
-    add_subdirectory(examples)
+  add_subdirectory(examples)
 endif()

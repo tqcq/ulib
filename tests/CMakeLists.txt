@@ -13,6 +13,7 @@ add_executable(
   ulib/system/thread_unittest.cpp
   ulib/system/thread_pool_unittest.cpp
   ulib/system/timer_unittest.cpp
+  3party/eventbus/eventbus_unittest.cpp
   3party/inja/inja_unittest.cpp
   3party/optional/optional_unittest.cpp
   3party/sqlpp11/sqlpp11_unittest.cpp
